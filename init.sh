@@ -21,7 +21,7 @@ sudo pip install xlwt xlrd # for translation file conversions
 sudo pip install awscli
 
 # Install "jq" and "rename" for install/web-s3.sh
-sudo apt install jq rename
+sudo yum install jq #rename
 
 # Compile OSM2World
 make osm2world
