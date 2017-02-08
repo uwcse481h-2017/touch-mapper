@@ -10,7 +10,7 @@ if [[ $# != 1 ]]; then
 fi
 environment=$1
 
-eval $( parameters.sh )
+eval $( parameters.sh $environment )
 
 if aws cloudformation describe-stacks --stack-name $stack_name >&/dev/null; then
     mode=update

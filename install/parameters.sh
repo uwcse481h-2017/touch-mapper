@@ -21,15 +21,15 @@ if [[ $environment == dev ]]; then
     echo env_name=dev-$dev_env
     echo stack_name=TouchMapperDev${dev_env^}
     echo is_dev_env=true
-    echo domain=dev-$dev_env.touch-mapper.org
+    echo domain=dev-$dev_env.touch-mapper-481.org
 else
     echo env_name=$environment
     echo stack_name=TouchMapper${environment^}
     echo is_dev_env=false
     if [[ $environment == prod ]]; then
-        echo domain=touch-mapper.org
+        echo domain=touch-mapper-481.org
     else
-        echo domain=$environment.touch-mapper.org
+        echo domain=$environment.touch-mapper-481.org
     fi
 fi
 

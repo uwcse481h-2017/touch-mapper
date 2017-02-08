@@ -17,12 +17,14 @@ echo "S3 web bucket: $url"
 ./create-env-js.sh $env_name >build/scripts/environment.js 
 
 # build => dist
+# Changes call to rename from "rename 's/\.html//' *.html" because 
+# we are using a newer version of the rename package
 rm -rf dist
 cp -a build dist
 for lang in $(cd dist; find ?? -type d); do
     (
         cd dist/$lang
-        rename 's/\.html//' *.html
+        rename .html '' *.html
         mv index index.html
     )
 done

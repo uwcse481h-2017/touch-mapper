@@ -14,7 +14,7 @@
     "Domain": {
       "Description": "CloudFront domain for non-dev. Also defines S3 bucket names.",
       "Type": "String",
-      "AllowedPattern" : ".*touch-mapper.org"
+      "AllowedPattern" : ".*touch-mapper-481.org"
     }
   },
   "Conditions": {
