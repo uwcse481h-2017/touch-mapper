@@ -8,8 +8,8 @@
     <meta name="author" content="Samuli Kärkkäinen">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta property="og:site_name" content="{{ meta_og_site_name }}" />
-    <meta property="og:url" content="https://touch-mapper.org/" />
-    <meta property="og:image" content="https://touch-mapper.org/images/og_image.jpg" />
+    <meta property="og:url" content="https://touch-mapper-481.org/" />
+    <meta property="og:image" content="https://touch-mapper-481.org/images/og_image.jpg" />
     <title>{{ title }} | Touch Mapper</title>
 
     <link rel="icon" type="image/png" href="/images/favicon.png" />

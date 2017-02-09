@@ -82,7 +82,7 @@ function uriEncodeRequestId(rid) {
 
   window.makeS3url = function(id) {
     // TODO: move this to parameters.js so that AWS Region is dynamic
-    var MAPS_S3_HOST = window.location.protocol + "//s3-eu-west-1.amazonaws.com/" + window.TM_ENVIRONMENT + ".maps.touch-mapper";
+    var MAPS_S3_HOST = window.location.protocol + "//s3-us-west-2.amazonaws.com/" + window.TM_ENVIRONMENT + ".maps.touch-mapper";
     return MAPS_S3_HOST + "/map/" + uriEncodeRequestId(id) + '.stl';
   };
 

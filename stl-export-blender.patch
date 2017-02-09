@@ -5,7 +5,7 @@
  def _header_version():
      import bpy
 -    return "Exported from Blender-" + bpy.app.version_string
-+    return "Created in touch-mapper.org. Exported from Blender-" + bpy.app.version_string
++    return "Created in touch-mapper-481.org. Exported from Blender-" + bpy.app.version_string
  
  
  def _is_ascii_file(data):

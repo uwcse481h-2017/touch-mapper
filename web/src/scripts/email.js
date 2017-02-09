@@ -39,10 +39,11 @@
             email.removeClass('invalid');
 
             AWS.config.update({
+                // Samuli's accessKeyId & secretAccessKey
                 accessKeyId: 'AKIAIAD65QYHCIFV7BXQ',
                 secretAccessKey: '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'
             });
-            AWS.config.region = 'eu-west-1';
+            AWS.config.region = 'us-west-2';
 
             var lambda = new AWS.Lambda({apiVersion: '2015-03-31'});
             var payload = {
