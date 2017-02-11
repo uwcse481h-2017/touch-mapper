@@ -134,20 +134,20 @@ public class ConversionFacade {
 				new RoadModule(),
 				new RailwayModule(),
 				new BuildingModule(),
-				//new ParkingModule(),
-				//new TreeModule(),
-				//new StreetFurnitureModule(),
-				//new TrafficSignModule(),
+				new ParkingModule(), //
+				new TreeModule(), //
+				new StreetFurnitureModule(), //
+				new TrafficSignModule(), //
 				new WaterModule()
-				//new PoolModule(),
-				//new GolfModule(),
-				//new CliffModule(),
-				//new BarrierModule(),
-				//new PowerModule(),
-				//new BridgeModule(),
-				//new TunnelModule(),
-				//new SurfaceAreaModule(),
-				//new InvisibleModule()
+				new PoolModule(), //
+				new GolfModule(), //
+				new CliffModule(), //
+				new BarrierModule(), //
+				new PowerModule(), //
+				new BridgeModule(), //
+				new TunnelModule(), //
+				new SurfaceAreaModule(), //
+				new InvisibleModule() //
 		);
 		
 	}
