@@ -66,6 +66,15 @@ function initInputs(outputs, osmDragPanInteraction) {
   }).val(getLocalStorageStr("map-scale-preset", "2400"))
     .change();
 
+  // ###################
+  // # Features preset #
+  // ###################
+  $("#map-features-preset").change(function(){
+    $("#map-features-input").val($(this).val()).change();
+    setLocalStorage("map-features-preset", $(this).val());
+  }).val(getLocalStorageStr("map-features-preset", "default"))
+    .change();
+
   // Advanced mode
   $("#advanced-input").click(function(){
     if (initDone) {
