@@ -59,18 +59,55 @@ window.initOsmPreview = function(outputs) {
   // Generates the contents of the List of Points of Interest in a Map
   // (based on the parsed osmPOIhtml Data file, picking out important nodes)
   function updatePointsOfInterestMapContent(url) {
-    // the HTML string with the list of poitns of interest
-    var contentHTMLString = '<h3><u>Points of Interest Included in Map:</u></h3>';
-    contentHTMLString += '<b>OSM Data URL (Remove): </b>' + url + '<br>'; // TODO: remove this line
-    contentHTMLString += '<p><ul style="padding-left: 15px;"><br>';
+    // Extract the names of tags from the html
     
-    // TODO: generate a list of points of interst to describe map based on osmPOIhtml (parsed)
-    var pointsOfInterest = ["Element 1 (Remove)", "Element 2 (Remove)", "Element 3 (Remove)"]; 
-    for (var i = 0; i < pointsOfInterest.length; i++) {
-       contentHTMLString += '<li><b>' + pointsOfInterest[i] + '</b></li>';
+    // The dictionary that will hold keys and values such that each key is a category
+    // and each value is a list of features from that category
+    var categories = {};
+    
+    // The list of elements from the body of the html file (we only care about the body)
+    var elements = new DOMParser().parseFromString(osmPOIhtml, "text/html").body.childNodes;
+
+    // A variable that will keep track of the most recent category seen so we know
+    // which category each feature belongs to
+    var currentCategory;
+
+    // Loop through each element (some are blank, others are categories, and the rest are features)
+    for (var i = 0; i < elements.length; i++) {
+      var element = elements[i];
+
+      if (element.nodeType === 1) { // Otherwise, this element is blank
+        if (element.tagName === "H2") { // This element is a category  
+          categories[element.innerHTML] = [];
+          currentCategory = element.innerHTML;
+        } else if (element.tagName === "P") { // This element is a feature
+          if (currentCategory === undefined) {
+            console.log("ERROR: The format of the provided html is unexpected. " + 
+                        "Expected a category name to come before any feature name.");
+            break;
+          } else if (element.hasChildNodes()) {
+            categories[currentCategory].push(element.firstChild.innerHTML); 
+          }
+        }
+      }
     }
-    contentHTMLString += '</u><p>';
-   
+
+    // the HTML string
+    var contentHTMLString = ""; 
+
+    // Putting all the categories and their features in the HTML string
+    for (var category in categories) {
+      contentHTMLString += '<h3><u>' + category + ' Included in Map:</u></h3>';
+      contentHTMLString += '<p><ul style="padding-left: 15px;"><br>';
+      
+      var features = categories[category];
+      for (var i = 0; i < features.length; i++) {
+        contentHTMLString += '<li><b>' + features[i] + '</b></li>';
+      }
+
+      contentHTMLString += '</u><p>';
+    }
+
     contentHTMLString += '<br><br><b>Current HTML Data (Remove):</b><br><br>' + osmPOIhtml; 
  
     // Update Points of Interes from Map Content as a list of Map Elements
