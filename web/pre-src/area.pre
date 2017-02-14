@@ -1,4 +1,4 @@
-<div class="show-on-load" style="display: none">
+<div id="mainArea" class="show-on-load" style="display: none">
   <script src="../scripts/aws-sdk-2.3.3.min.js"></script>
   <script src="../scripts/ol-3.15.1-custom.min.js"></script>
 
@@ -176,6 +176,11 @@
       <div class="arrow left"></div>
       <div class="arrow right"></div>
     </div>
+  </div>
+
+  <div id="pointsOfInterestMapContent"
+       style="padding:10px; background-color:white; border:1px solid black; border-radius: 8px; word-warp: break-word;">
+    <!-- Contents (list) inserted by updatePointsOfInterestMapContent() JavaScript function in osm-preview.js -->
   </div>
 
   <a class="back-to-previous-page" href=".">Back to address search</a>

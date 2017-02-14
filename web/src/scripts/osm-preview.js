@@ -49,10 +49,38 @@ window.initOsmPreview = function(outputs) {
     }
   }
 
+  // Returns the HTML div element inside another div container
+  function getElementInsideContainer(containerID, childID) {
+    var elm = document.getElementById(childID);
+    var parent = elm ? elm.parentNode : {};
+    return (parent.id && parent.id === containerID) ? elm : {};
+  } 
+ 
+  // Generates the contents of the List of Points of Interest in a Map
+  // (based on the parsed OSM XML Data file, picking out important tags)
+  function updatePointsOfInterestMapContent(url) {
+    // the HTML string with the list of poitns of interest
+    var contentHTMLString = '<h3><u>Points of Interest Included in Map:</u></h3>';
+    contentHTMLString += '<b>OSM Data URL: </b>' + url + '<br>'; // TODO: remove this line
+    contentHTMLString += '<p><ul style="padding-left: 15px;">';
+    
+    // TODO: generate a list of points of interst to describe map based on osmDataXMLString (parsed)
+    var pointsOfInterest = ["Element 1", "Element 2", "Element 3"]; 
+    for (var i = 0; i < pointsOfInterest.length; i++) {
+       contentHTMLString += '<li><b>' + pointsOfInterest[i] + '</b></li>';
+    }
+    contentHTMLString += '</u><p>';
+    
+    // Update Points of Interes from Map Content as a list of Map Elements
+    var elm = getElementInsideContainer('mainArea', 'pointsOfInterestMapContent');
+    elm.innerHTML = contentHTMLString;
+  }                                                              
+
   // Calculates the new bounded region and updates the OSM Data that 
   // matches this newly bounded region. Uses the OverPass API to grab 
   // the updated data in the form of an XML file. Updates osmDataXMLString 
   // variable with the String representation of this XML file.
+  // May need to fix to support Multipart Maps
   function getUpdatedOSMData() {
     var radius = mapDiameter() / 2;
     var metersPerDeg = mapCalc.metersPerDegree(data.get("lat"));
@@ -75,12 +103,16 @@ window.initOsmPreview = function(outputs) {
        osmDataXMLString = new XMLSerializer().serializeToString(osmDataXML.documentElement); // XML file with OSM tags & nodes
  
        console.log("\n### Successfully Loaded new OSM Data (as XML String) ###\n" );
-    });
+       
+       // Update the Points of Interest Map Contents
+       updatePointsOfInterestMapContent(url);        
+     });
   }
 
   // Printings informaton about the bounding box of the currently
   // displayed map (used mostly for debugging purposes)
   function printMapRegionDimensions() {
+    console.log("\n### Data Values ###");
     console.log('latitude : ' + data.get("lat"));
     console.log('longitude: ' + data.get("lon"));
     console.log('offsetX  : ' + data.get("offsetX"));
@@ -88,7 +120,9 @@ window.initOsmPreview = function(outputs) {
     console.log('scale    : ' + data.get("scale"));
     console.log('size     : ' + data.get("size"));
     console.log('map diameter:   ' + mapDiameter());
-    console.log('center point: ' + computeLonLat(data) + '\n');  
+    console.log('center point: ' + computeLonLat(data));  
+    console.log('multipartXpc: ' + data.get("multipartXpc"));
+    console.log('multipartYpc: ' + data.get("multipartYpc"));
   }
 
   // Update View & corresponding OSM Data when relevant parameters change
