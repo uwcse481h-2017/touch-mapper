@@ -54,6 +54,14 @@ window.initOsmPreview = function(outputs) {
     var elm = document.getElementById(childID);
     var parent = elm ? elm.parentNode : {};
     return (parent.id && parent.id === containerID) ? elm : {};
+  }
+
+  // removes duplicate entries from an array
+  function removeDuplicates(a) {
+    var uniqueArray = a.filter(function(item, pos) {
+      return a.indexOf(item) === pos;
+    });
+    return uniqueArray;
   } 
  
   // Generates the contents of the List of Points of Interest in a Map
@@ -98,14 +106,14 @@ window.initOsmPreview = function(outputs) {
     // Putting all the categories and their features in the HTML string
     for (var category in categories) {
       contentHTMLString += '<h3><u>' + category + ' Included in Map:</u></h3>';
-      contentHTMLString += '<p><ul style="padding-left: 15px;"><br>';
+      contentHTMLString += '<p><ul style="padding-left: 20px;">';
       
-      var features = categories[category];
+      var features = removeDuplicates(categories[category]);
       for (var i = 0; i < features.length; i++) {
         contentHTMLString += '<li><b>' + features[i] + '</b></li>';
       }
 
-      contentHTMLString += '</u><p>';
+      contentHTMLString += '</ul><p><br>';
     }
 
     contentHTMLString += '<br><br><b>Current HTML Data (Remove):</b><br><br>' + osmPOIhtml; 
@@ -134,7 +142,7 @@ window.initOsmPreview = function(outputs) {
 
     // Calling Overpass API Popup Query
     var bbox = "" + latMin + "," + lonMin + "," + latMax + "," + lonMax;
-    var url = "http://overpass-api.de/api/interpreter?data=[out:popup(\"Points of Interest\";[name][highway!~\".\"][railway!~\".\"][landuse!~\".\"][type!~\"route|network|associatedStreet\"][public_transport!~\".\"][route!~\"bus|ferry|railway|train|tram|trolleybus|subway|light_rail\"];\"name\";)(\"Streets\";[highway~\"primary|secondary|tertiary|residential|unclassified\"];\"name\";)(\"Public Transport Stops\";[name][highway~\"bus_stop|tram_stop\"];[name][railway~\"halt|station|tram_stop\"];\"name\";)(\"Public Transport Lines\";[route~\"bus|ferry|railway|train|tram|trolleybus|subway|light_rail|monorail\"];\"ref\";)];(node(" + bbox + ");<;);out;";
+    var url = "http://overpass-api.de/api/interpreter?data=[out:popup(\"Points of Interest\";[name][highway!~\".\"][railway!~\".\"][landuse!~\".\"][type!~\"route|network|associatedStreet\"][public_transport!~\".\"][route!~\"bus|ferry|railway|train|tram|trolleybus|subway|light_rail\"];\"name\";)(\"Streets\";[highway~\"primary|secondary|tertiary|residential|unclassified\"];\"name\";)(\"Public Transport Stops\";[name][highway~\"bus_stop|tram_stop\"];[name][railway~\"halt|station|tram_stop\"];\"name\";)(\"Public Transport Lines\";[route~\"bus|ferry|railway|train|tram|trolleybus|subway|light_rail|monorail\"];\"name\";)];(node(" + bbox + ");<;);out;";
 
     // JQuery GET request to grab OSM data from the url
     $.get(url, function( osmDataHTML ) {
