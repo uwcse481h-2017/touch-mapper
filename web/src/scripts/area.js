@@ -72,8 +72,13 @@ function initInputs(outputs, osmDragPanInteraction) {
   $("#map-styles-preset").change(function(){
     $("#map-styles-input").val($(this).val()).change();
     setLocalStorage("map-styles-preset", $(this).val());
-  }).val(getLocalStorageStr("map-styles-preset", "default"))
+  }).val(getLocalStorageStr("map-styles-preset", "select"))
     .change();
+
+  // #############################
+  // # Feature Categories preset #
+  // #############################
+  
 
   // Advanced mode
   $("#advanced-input").click(function(){
