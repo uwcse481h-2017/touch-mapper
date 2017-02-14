@@ -57,20 +57,22 @@ window.initOsmPreview = function(outputs) {
   } 
  
   // Generates the contents of the List of Points of Interest in a Map
-  // (based on the parsed OSM XML Data file, picking out important tags)
+  // (based on the parsed osmPOIhtml Data file, picking out important nodes)
   function updatePointsOfInterestMapContent(url) {
     // the HTML string with the list of poitns of interest
     var contentHTMLString = '<h3><u>Points of Interest Included in Map:</u></h3>';
-    contentHTMLString += '<b>OSM Data URL: </b>' + url + '<br>'; // TODO: remove this line
-    contentHTMLString += '<p><ul style="padding-left: 15px;">';
+    contentHTMLString += '<b>OSM Data URL (Remove): </b>' + url + '<br>'; // TODO: remove this line
+    contentHTMLString += '<p><ul style="padding-left: 15px;"><br>';
     
-    // TODO: generate a list of points of interst to describe map based on osmDataXMLString (parsed)
-    var pointsOfInterest = ["Element 1", "Element 2", "Element 3"]; 
+    // TODO: generate a list of points of interst to describe map based on osmPOIhtml (parsed)
+    var pointsOfInterest = ["Element 1 (Remove)", "Element 2 (Remove)", "Element 3 (Remove)"]; 
     for (var i = 0; i < pointsOfInterest.length; i++) {
        contentHTMLString += '<li><b>' + pointsOfInterest[i] + '</b></li>';
     }
     contentHTMLString += '</u><p>';
-    
+   
+    contentHTMLString += '<br><br><b>Current HTML Data (Remove):</b><br><br>' + osmPOIhtml; 
+ 
     // Update Points of Interes from Map Content as a list of Map Elements
     var elm = getElementInsideContainer('mainArea', 'pointsOfInterestMapContent');
     elm.innerHTML = contentHTMLString;
@@ -78,8 +80,8 @@ window.initOsmPreview = function(outputs) {
 
   // Calculates the new bounded region and updates the OSM Data that 
   // matches this newly bounded region. Uses the OverPass API to grab 
-  // the updated data in the form of an XML file. Updates osmDataXMLString 
-  // variable with the String representation of this XML file.
+  // the updated Points of Interest data as an HTML string. Updates 
+  // osmPOIhtml variable with the HTML returned contents.
   // May need to fix to support Multipart Maps
   function getUpdatedOSMData() {
     var radius = mapDiameter() / 2;
@@ -93,17 +95,17 @@ window.initOsmPreview = function(outputs) {
     var latMin = posLonLat[1] - degreesLat;
     var latMax = posLonLat[1] + degreesLat;
 
-    // Specifically calling Overpass API for testing...
-    var bbox = "" + lonMin + "," + latMin + "," + lonMax + "," + latMax;
-    var url = "http://overpass.osm.rambler.ru/cgi/xapi?map?bbox=" + bbox;
+    // Calling Overpass API Popup Query
+    var bbox = "" + latMin + "," + lonMin + "," + latMax + "," + lonMax;
+    var url = "http://overpass-api.de/api/interpreter?data=[out:popup(\"Points of Interest\";[name][highway!~\".\"][railway!~\".\"][landuse!~\".\"][type!~\"route|network|associatedStreet\"][public_transport!~\".\"][route!~\"bus|ferry|railway|train|tram|trolleybus|subway|light_rail\"];\"name\";)(\"Streets\";[highway~\"primary|secondary|tertiary|residential|unclassified\"];\"name\";)(\"Public Transport Stops\";[name][highway~\"bus_stop|tram_stop\"];[name][railway~\"halt|station|tram_stop\"];\"name\";)(\"Public Transport Lines\";[route~\"bus|ferry|railway|train|tram|trolleybus|subway|light_rail|monorail\"];\"ref\";)];(node(" + bbox + ");<;);out;";
 
     // JQuery GET request to grab OSM data from the url
-    $.get(url, function( osmDataXML ) {
-       // Note: the variable osmDataXMLString lives in util.js (to make it more public); Look there for details
-       osmDataXMLString = new XMLSerializer().serializeToString(osmDataXML.documentElement); // XML file with OSM tags & nodes
+    $.get(url, function( osmDataHTML ) {
+       // Note: the variable osmPOIhtml lives in util.js (to make it more public); Look there for details
+       osmPOIhtml = osmDataHTML; 
  
-       console.log("\n### Successfully Loaded new OSM Data (as XML String) ###\n" );
-       
+       console.log("\n### Successfully Loaded new OSM Data (as HTML String) ###\n" );
+
        // Update the Points of Interest Map Contents
        updatePointsOfInterestMapContent(url);        
      });

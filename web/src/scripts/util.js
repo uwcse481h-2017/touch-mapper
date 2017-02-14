@@ -1,14 +1,10 @@
 'use strict';
 /* eslint camelcase:0, quotes:0, space-unary-ops:0, no-alert:0, no-unused-vars:0, no-shadow:0, no-extend-native:0, no-trailing-spaces:0 */
 
-// the current OSM data for the bounded map region
-// this data is a String of XML data from OSM RRIOR to stl file generation
-// modifications to this variable made in osm-preview.js
-var osmDataXMLString;
-
-function printOSMDataToConsole() {
-    console.log("\n" + osmDataXMLString + "\n");
-}
+// The current OSM data for Points of Interest content for the bounded 
+// map region. This data is a String of HTML data from OSM RRIOR to stl 
+// file generation. Modifications to this variable made in osm-preview.js
+var osmPOIhtml;
 
 function createCookie(name, value, days) {
     var expires;
