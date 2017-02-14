@@ -32,7 +32,7 @@
     "map_scale__3200": "average suburbs",
     "map_scale__5600": "very sparsely built areas",
     "map_scale__9999": "areas with only large roads",
-    "map_features": "Map features",
+    "map_styles": "Map styles",
     "advanced_settings": "Advanced",
     "show_advanced_settings": "Show advanced options",
     "printing_tips_full": "see __startLink__3D printing tips__endLink__ below",

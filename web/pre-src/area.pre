@@ -45,21 +45,26 @@
     </div>
   </div>
 
-  <!--#########################-->
-  <!--# for feature selection #-->
-  <!--#########################-->
-  <div class="row main-row map-features-preset-row grey-in-advanced">
+  <!--###########################-->
+  <!--# for map style selection #-->
+  <!--###########################-->
+  <div class="row main-row map-styles-preset-row grey-in-advanced">
     <div class="col col1">
-      <label for="map-features-preset">{{ map_features }}:</label>
+      <label for="map-styles-preset">{{ map_styles }}:</label>
     </div>
     <div class="col col2">
-      <select class="grey-in-advanced" id="map-features-preset" data-initial="default">
-        <option value="default">Default &ndash; buildings, paths, roads, water features, some public transportation</option>
-        <option value="public-transportation">Public Transportation &ndash; more public transportation details</option>
-        <option value="pedestrian">Pedestrian &ndash; building entrances, path details, street furniture, barriers, natural features</option>
+      <select class="grey-in-advanced" id="map-styles-preset" data-initial="default">
+        <option style="word-wrap: break-word;" value="default">Default &ndash; buildings, paths, roads, water features, some public transportation</option>
+        <option style="word-wrap: break-word;" value="public-transportation">Public Transportation &ndash; more public transportation details</option>
+        <option style="word-wrap: break-word;" value="pedestrian">Pedestrian &ndash; building entrances, path details, street furniture, barriers, natural features</option>
       </select>
     </div>
   </div>
+
+  <!--##################################-->
+  <!--# for feature category selection #-->
+  <!--##################################-->
+
 
   <div class="row main-row advanced-toggle">
     <div class="col col1">
