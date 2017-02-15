@@ -231,8 +231,6 @@ window.initOsmPreview = function(outputs) {
        // Note: the variable osmPOIhtml lives in util.js (to make it more public); Look there for details
        osmPOIhtml = osmDataHTML;
        
-       console.log("url = " + url); 
- 
        console.log("### Successfully Loaded new OSM Data (as HTML String) ###" );
 
        // Update the Points of Interest Map Contents
@@ -252,7 +250,7 @@ window.initOsmPreview = function(outputs) {
   // Whenever the dropdown selection is changed, call getUpdatedOSMData to send a new query
   document.getElementById("map-styles-preset").onchange = function() {
     getUpdatedOSMData();
-    console.log("###Updated OSM Data due to Dropdown Selection ###\n");
+    console.log("### Updated OSM Data due to Dropdown Selection ###\n");
   };
 
   // Printings informaton about the bounding box of the currently
@@ -284,6 +282,7 @@ window.initOsmPreview = function(outputs) {
     // Grab osm data for this map region centered at computeLonLat() with
     // offset X & Y from the latitude (lat) & longitude (lon) of the point of interest
     getUpdatedOSMData();
+    console.log("### Updated OSM Data due to Visual Map Region Change ###\n");
   }); // end of data.on
 
   // Map panning
