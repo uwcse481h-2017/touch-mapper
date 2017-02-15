@@ -142,7 +142,34 @@ window.initOsmPreview = function(outputs) {
 
     // Calling Overpass API Popup Query
     var bbox = "" + latMin + "," + lonMin + "," + latMax + "," + lonMax;
-    var url = "http://overpass-api.de/api/interpreter?data=[out:popup(\"Points of Interest\";[name][highway!~\".\"][railway!~\".\"][landuse!~\".\"][type!~\"route|network|associatedStreet\"][public_transport!~\".\"][route!~\"bus|ferry|railway|train|tram|trolleybus|subway|light_rail\"];\"name\";)(\"Streets\";[highway~\"primary|secondary|tertiary|residential|unclassified\"];\"name\";)(\"Public Transport Stops\";[name][highway~\"bus_stop|tram_stop\"];[name][railway~\"halt|station|tram_stop\"];\"name\";)(\"Public Transport Lines\";[route~\"bus|ferry|railway|train|tram|trolleybus|subway|light_rail|monorail\"];\"name\";)];(node(" + bbox + ");<;);out;";
+
+    // Buiulding up the url for querying overpass popup api
+    var urlPrefix = "http://overpass-api.de/api/interpreter?data=[out:popup";
+    var urlPostfix = "];(node(" + bbox + ");<;);out;";
+
+    var pedestrianOptions = "" + 
+      "(\"Points of Interest\";[name][highway!~\".\"][railway!~\".\"][landuse!~\".\"]" +
+      "[type!~\"route|network|associatedStreet\"][public_transport!~\".\"][route!~\""  +
+      "bus|ferry|railway|train|tram|trolleybus|subway|light_rail\"];\"name\";)(\""     +
+      "Streets\";[highway~\"primary|secondary|tertiary|residential|unclassified\"];\"" +
+      "name\";)";
+
+    var transitOptions = "" +
+      "(\"Streets\";[highway~\"primary|secondary|tertiary|residential|unclassified\"]" +
+      ";\"name\";)(\"Public Transport Stops\";[name][highway~\"bus_stop|tram_stop\"];" +
+      "[name][railway~\"halt|station|tram_stop\"];\"name\";)(\"Public Transport Lines" +
+      "\";[route~\"bus|ferry|railway|train|tram|trolleybus|subway|light_rail|monorail" +
+      "\"];\"name\";)";
+
+    var foodDrinkOptions = "" +
+      "(\"Food and Drink\";[name][amenity~\"bar|bbq|biergarten|cafe|drinking_water|"   +
+      "fast_food|food_court|ice_cream|pub|restaurant\"];\"name\";)";
+
+    var options;
+
+    // TODO: Add code to set the options variable based on which options are selected in area.pre (?)
+
+    var url = urlPrefix + options + urlPostfix;      
 
     // JQuery GET request to grab OSM data from the url
     $.get(url, function( osmDataHTML ) {
