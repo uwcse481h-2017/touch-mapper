@@ -142,7 +142,7 @@ window.initOsmPreview = function(outputs) {
     // They query for features that match the theme in their variable name, eg medicalOptions
     // will query for hospitals etc.
     var pedestrianOptions = "" + 
-      "(\"Points of Interest\";[name][highway!~\".\"][railway!~\".\"][landuse!~\".\"]" +
+      "(\"Other Points of Interest\";[name][highway!~\".\"][railway!~\".\"][landuse!~\".\"]" +
       "[type!~\"route|network|associatedStreet\"][public_transport!~\".\"][route!~\"" +
       "bus|ferry|railway|train|tram|trolleybus|subway|light_rail\"];\"name\";)(\"" +
       "Streets\";[highway~\"primary|secondary|tertiary|residential|unclassified\"];\"" +
@@ -200,8 +200,16 @@ window.initOsmPreview = function(outputs) {
 
     if (presetSelection === "public-transportation") {
       options += transitOptions;
-    } else {
+    } else if (presetSelection === "pedestrian") {
       options += pedestrianOptions;
+    } else if (presetSelection === "default") {
+      // Do nothing, only want to use feature categories & other points of interest
+      options += pedestrianOptions;
+    } else { // (presetSelection === "select")
+      // Case of nothing selected
+      osmPOIhtml = "";
+      updatePointsOfInterestMapContent("");
+      return;
     }
 
     // Determining which checkboxes are checked by examining the HTML document
@@ -210,18 +218,20 @@ window.initOsmPreview = function(outputs) {
     var featureCategories = ["food-drink", "schools", "money", "entertainment", "medical", 
                              "public", "tourism", "shopping", "leisure"];
 
-    for (var i = 0; i < featureCategories.length; i++) {
+    for (var i = featureCategories.length - 1; i >= 0; i--) {
       if (document.getElementById('feature-category-' + featureCategories[i]).checked) {
-        options += optionCategories[i];
+        options = optionCategories[i] + options;
       }
     }
-
+    
     var url = urlPrefix + options + urlPostfix;      
 
     // JQuery GET request to grab OSM data from the url
     $.get(url, function( osmDataHTML ) {
        // Note: the variable osmPOIhtml lives in util.js (to make it more public); Look there for details
-       osmPOIhtml = osmDataHTML; 
+       osmPOIhtml = osmDataHTML;
+       
+       console.log("url = " + url); 
  
        console.log("### Successfully Loaded new OSM Data (as HTML String) ###" );
 
