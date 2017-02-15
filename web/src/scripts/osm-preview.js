@@ -98,7 +98,7 @@ window.initOsmPreview = function(outputs) {
 
     // Putting all the categories and their features in the HTML string
     for (var category in categories) {
-      contentHTMLString += '<h3><u>' + category + ' Included in Map:</u></h3>';
+      contentHTMLString += '<h3><u>' + category + '</u></h3>';
       contentHTMLString += '<p><ul style="padding-left: 20px;">';
       
       var features = removeDuplicates(categories[category]);
@@ -108,8 +108,6 @@ window.initOsmPreview = function(outputs) {
 
       contentHTMLString += '</ul><p><br>';
     }
-
-    contentHTMLString += '<br><br><b>Current HTML Data (Remove):</b><br><br>' + osmPOIhtml; 
  
     // Update Points of Interes from Map Content as a list of Map Elements
     var elm = getElementInsideContainer('mainArea', 'pointsOfInterestMapContent');
@@ -140,10 +138,13 @@ window.initOsmPreview = function(outputs) {
     var urlPrefix = "http://overpass-api.de/api/interpreter?data=[out:popup";
     var urlPostfix = "];(node(" + bbox + ");<;);out;";
 
+    // The following string variables are all different queries to include in the url
+    // They query for features that match the theme in their variable name, eg medicalOptions
+    // will query for hospitals etc.
     var pedestrianOptions = "" + 
       "(\"Points of Interest\";[name][highway!~\".\"][railway!~\".\"][landuse!~\".\"]" +
-      "[type!~\"route|network|associatedStreet\"][public_transport!~\".\"][route!~\""  +
-      "bus|ferry|railway|train|tram|trolleybus|subway|light_rail\"];\"name\";)(\""     +
+      "[type!~\"route|network|associatedStreet\"][public_transport!~\".\"][route!~\"" +
+      "bus|ferry|railway|train|tram|trolleybus|subway|light_rail\"];\"name\";)(\"" +
       "Streets\";[highway~\"primary|secondary|tertiary|residential|unclassified\"];\"" +
       "name\";)";
 
@@ -155,7 +156,7 @@ window.initOsmPreview = function(outputs) {
       "\"];\"name\";)";
 
     var foodDrinkOptions = "" +
-      "(\"Food and Drink\";[name][amenity~\"bar|bbq|biergarten|cafe|drinking_water|"   +
+      "(\"Food and Drink\";[name][amenity~\"bar|bbq|biergarten|cafe|drinking_water|" +
       "fast_food|food_court|ice_cream|pub|restaurant\"];\"name\";)";
 
     var schoolsOptions = "" +
@@ -171,11 +172,11 @@ window.initOsmPreview = function(outputs) {
       "|swingerclub\"];\"name\";)";
 
     var medicalOptions = "" +
-      "(\"Medical\";[name][amenity~\"clinic|dentist|doctors|hospital|nursing_home|"    +
+      "(\"Medical\";[name][amenity~\"clinic|dentist|doctors|hospital|nursing_home|" +
       "pharmacy|social_facility|veterinary|blood_donation\"];\"name\";)";
 
     var publicOptions = "" +
-      "(\"Public\";[name][amenity~\"courthouse|embassy|fire_station|internet_cafe|"    +
+      "(\"Public\";[name][amenity~\"courthouse|embassy|fire_station|internet_cafe|" +
       "marketplace|police|post_office|prison|toilets|vending_machine\"];\"name\";)";
 
     var tourismOptions = "" +
@@ -185,14 +186,35 @@ window.initOsmPreview = function(outputs) {
       "(\"Shopping\";[name][shop~\".\"];\"name\";)";
 
     var leisureOptions = "" +
-      "(\"Leisure\";[name][leisure~\"adult_gaming_centre|amusement_arcade|bandstand|"  +
-      "beach_resort|common|dance|firepit|fishing|fitness_centre|hackerspace|ice_rink"  +
-      "|horse_riding|marina|miniature_golf|picnic_table|sports_centre|stadium|track|"  +
+      "(\"Leisure\";[name][leisure~\"adult_gaming_centre|amusement_arcade|bandstand|" +
+      "beach_resort|common|dance|firepit|fishing|fitness_centre|hackerspace|ice_rink" +
+      "|horse_riding|marina|miniature_golf|picnic_table|sports_centre|stadium|track|" +
       "summer_camp|water_park\"];\"name\";)";
 
-    var options;
+    // This variable will hold all of the queries concatenated together
+    var options = "";
 
-    // TODO: Add code to set the options variable based on which options are selected in area.pre (?)
+    // Determining which preset is selected by examining the HTML document
+    var mapStylesPreset = document.getElementById('map-styles-preset');
+    var presetSelection = mapStylesPreset.options[mapStylesPreset.selectedIndex].value;
+
+    if (presetSelection === "public-transportation") {
+      options += transitOptions;
+    } else {
+      options += pedestrianOptions;
+    }
+
+    // Determining which checkboxes are checked by examining the HTML document
+    var optionCategories = [foodDrinkOptions, schoolsOptions, moneyOptions, entertainmentOptions, medicalOptions, 
+                            publicOptions, tourismOptions, shoppingOptions, leisureOptions];
+    var featureCategories = ["food-drink", "schools", "money", "entertainment", "medical", 
+                             "public", "tourism", "shopping", "leisure"];
+
+    for (var i = 0; i < featureCategories.length; i++) {
+      if (document.getElementById('feature-category-' + featureCategories[i]).checked) {
+        options += optionCategories[i];
+      }
+    }
 
     var url = urlPrefix + options + urlPostfix;      
 
@@ -216,6 +238,12 @@ window.initOsmPreview = function(outputs) {
     getUpdatedOSMData();
     console.log("### Updated OSM Data due to Check Box Selection ###\n");
   });
+
+  // Whenever the dropdown selection is changed, call getUpdatedOSMData to send a new query
+  document.getElementById("map-styles-preset").onchange = function() {
+    getUpdatedOSMData();
+    console.log("###Updated OSM Data due to Dropdown Selection ###\n");
+  };
 
   // Printings informaton about the bounding box of the currently
   // displayed map (used mostly for debugging purposes)
