@@ -136,7 +136,7 @@ window.initOsmPreview = function(outputs) {
     // Calling Overpass API Popup Query
     var bbox = "" + latMin + "," + lonMin + "," + latMax + "," + lonMax;
 
-    // Buiulding up the url for querying overpass popup api
+    // Building up the url for querying overpass popup api
     var urlPrefix = "http://overpass-api.de/api/interpreter?data=[out:popup";
     var urlPostfix = "];(node(" + bbox + ");<;);out;";
 
@@ -157,6 +157,38 @@ window.initOsmPreview = function(outputs) {
     var foodDrinkOptions = "" +
       "(\"Food and Drink\";[name][amenity~\"bar|bbq|biergarten|cafe|drinking_water|"   +
       "fast_food|food_court|ice_cream|pub|restaurant\"];\"name\";)";
+
+    var schoolsOptions = "" +
+      "(\"Schools\";[name][amenity~\"college|kindergarten|library|school|music_school" +
+      "|driving_school|language_school|university\"];\"name\";)";
+
+    var moneyOptions = "" +
+      "(\"Money\";[name][amenity~\"bank|atm|bureau_de_change\"];\"name\";)";
+
+    var entertainmentOptions = "" +
+      "(\"Entertainment\";[name][amenity~\"arts_center|brothel|casino|cinema|gambling" +
+      "|studio|community_center|nightclub|planetarium|social_centre|stripclub|theater" +
+      "|swingerclub\"];\"name\";)";
+
+    var medicalOptions = "" +
+      "(\"Medical\";[name][amenity~\"clinic|dentist|doctors|hospital|nursing_home|"    +
+      "pharmacy|social_facility|veterinary|blood_donation\"];\"name\";)";
+
+    var publicOptions = "" +
+      "(\"Public\";[name][amenity~\"courthouse|embassy|fire_station|internet_cafe|"    +
+      "marketplace|police|post_office|prison|toilets|vending_machine\"];\"name\";)";
+
+    var tourismOptions = "" +
+      "(\"Tourism\";[name][tourism~\".\"];\"name\";)";
+
+    var shoppingOptions = "" +
+      "(\"Shopping\";[name][shop~\".\"];\"name\";)";
+
+    var leisureOptions = "" +
+      "(\"Leisure\";[name][leisure~\"adult_gaming_centre|amusement_arcade|bandstand|"  +
+      "beach_resort|common|dance|firepit|fishing|fitness_centre|hackerspace|ice_rink"  +
+      "|horse_riding|marina|miniature_golf|picnic_table|sports_centre|stadium|track|"  +
+      "summer_camp|water_park\"];\"name\";)";
 
     var options;
 
