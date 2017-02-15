@@ -142,12 +142,21 @@ window.initOsmPreview = function(outputs) {
        // Note: the variable osmPOIhtml lives in util.js (to make it more public); Look there for details
        osmPOIhtml = osmDataHTML; 
  
-       console.log("\n### Successfully Loaded new OSM Data (as HTML String) ###\n" );
+       console.log("### Successfully Loaded new OSM Data (as HTML String) ###" );
 
        // Update the Points of Interest Map Contents
        updatePointsOfInterestMapContent(url);        
      });
   }
+
+  // Monitors whether the feature-category textboxes in the UI change their value
+  // (in which case, this calls the getUpdatedOSMData to update the data on the map
+  // given the check box feature categories selected)
+  // categories: "food-drink", "schools", "money", "entertainment", "medical", "public", "tourism", "shopping", "leisure"
+  data.on("change:feature-category-food-drink change:feature-category-schools change:feature-category-money change:feature-category-entertainment change:feature-category-medical change:feature-category-public change:feature-category-tourism change:feature-category-shopping change:feature-category-leisure", function() {
+    getUpdatedOSMData();
+    console.log("### Updated OSM Data due to Check Box Selection ###\n");
+  });
 
   // Printings informaton about the bounding box of the currently
   // displayed map (used mostly for debugging purposes)
