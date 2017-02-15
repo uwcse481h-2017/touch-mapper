@@ -78,7 +78,7 @@ function initInputs(outputs, osmDragPanInteraction) {
   // #############################
   // # Feature Categories preset #
   // #############################
-  
+   $("#feature-categories-input").click(function() { });  
 
   // Advanced mode
   $("#advanced-input").click(function(){
