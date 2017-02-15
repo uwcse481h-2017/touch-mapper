@@ -6,6 +6,13 @@
 // file generation. Modifications to this variable made in osm-preview.js
 var osmPOIhtml;
 
+// Returns the HTML div element inside another div container
+function getElementInsideContainer(containerID, childID) {
+    var elm = document.getElementById(childID);
+    var parent = elm ? elm.parentNode : {};
+    return (parent.id && parent.id === containerID) ? elm : {};
+}                 
+
 function createCookie(name, value, days) {
     var expires;
     if (days) {

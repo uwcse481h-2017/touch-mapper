@@ -49,13 +49,6 @@ window.initOsmPreview = function(outputs) {
     }
   }
 
-  // Returns the HTML div element inside another div container
-  function getElementInsideContainer(containerID, childID) {
-    var elm = document.getElementById(childID);
-    var parent = elm ? elm.parentNode : {};
-    return (parent.id && parent.id === containerID) ? elm : {};
-  }
-
   // removes duplicate entries from an array
   function removeDuplicates(a) {
     var uniqueArray = a.filter(function(item, pos) {

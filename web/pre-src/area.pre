@@ -45,19 +45,54 @@
     </div>
   </div>
 
-  <!--#########################-->
-  <!--# for feature selection #-->
-  <!--#########################-->
-  <div class="row main-row map-features-preset-row grey-in-advanced">
+  <!--###########################-->
+  <!--# for map style selection #-->
+  <!--###########################-->
+  <div class="row main-row map-styles-preset-row grey-in-advanced">
     <div class="col col1">
-      <label for="map-features-preset">{{ map_features }}:</label>
+      <label for="map-styles-preset">{{ map_styles }}:</label>
     </div>
     <div class="col col2">
-      <select class="grey-in-advanced" id="map-features-preset" data-initial="default">
+      <select class="grey-in-advanced" id="map-styles-preset" data-initial="select">
+        <!--############## Change with language generalities ########################################-->
+        <option value="select">&ndash; Select a map style for basic map features &ndash;</option>
         <option value="default">Default &ndash; buildings, paths, roads, water features, some public transportation</option>
         <option value="public-transportation">Public Transportation &ndash; more public transportation details</option>
         <option value="pedestrian">Pedestrian &ndash; building entrances, path details, street furniture, barriers, natural features</option>
       </select>
+    </div>
+  </div>
+
+  <!--##################################-->
+  <!--# for feature category selection #-->
+  <!--##################################-->
+  <div class="row main-row feature-categories-preset-row grey-in-advanced">
+    <div class="col col1">
+      <label>{{ feature_categories }}:</label>
+    </div>
+    <div class="col col2">
+      <ul style="list-style: none;">
+        <!--############## Change with language generalities #######################################-->
+        <li><p>Select feature categories to include with the selected map style</p>
+        <li><input id="feature-category-food-drink" type="checkbox" />
+            <label for="feature-category-food-drink">{{ feature_category_food_drink }}</label>
+        <li><input id="feature-category-schools" type="checkbox" />
+            <label for="feature-category-schools">{{ feature_category_schools }}</label>
+        <li><input id="feature-category-money" type="checkbox" />
+            <label for="feature-category-money">{{ feature_category_money }}</label>
+        <li><input id="feature-category-entertainment" type="checkbox" />
+            <label for="feature-category-entertainment">{{ feature_category_entertainment }}</label>
+        <li><input id="feature-category-medical" type="checkbox" />
+            <label for="feature-category-medical">{{ feature_category_medical }}</label>
+        <li><input id="feature-category-public" type="checkbox" />
+            <label for="feature-category-public">{{ feature_category_public }}</label>
+        <li><input id="feature-category-tourism" type="checkbox" />
+            <label for="feature-category-tourism">{{ feature_category_tourism }}</label>
+        <li><input id="feature-category-shopping" type="checkbox" />
+            <label for="feature-category-shopping">{{ feature_category_shopping }}</label>
+        <li><input id="feature-category-leisure" type="checkbox" />
+            <label for="feature-category-leisure">{{ feature_category_leisure }}</label>
+      </ul>
     </div>
   </div>
 

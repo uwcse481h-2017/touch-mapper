@@ -66,14 +66,19 @@ function initInputs(outputs, osmDragPanInteraction) {
   }).val(getLocalStorageStr("map-scale-preset", "2400"))
     .change();
 
-  // ###################
-  // # Features preset #
-  // ###################
-  $("#map-features-preset").change(function(){
-    $("#map-features-input").val($(this).val()).change();
-    setLocalStorage("map-features-preset", $(this).val());
-  }).val(getLocalStorageStr("map-features-preset", "default"))
+  // #####################
+  // # Map Styles preset #
+  // #####################
+  $("#map-styles-preset").change(function(){
+    $("#map-styles-input").val($(this).val()).change();
+    setLocalStorage("map-styles-preset", $(this).val());
+  }).val(getLocalStorageStr("map-styles-preset", "select"))
     .change();
+
+  // #############################
+  // # Feature Categories preset #
+  // #############################
+   $("#feature-categories-input").click(function() { });  
 
   // Advanced mode
   $("#advanced-input").click(function(){
