@@ -78,7 +78,21 @@ function initInputs(outputs, osmDragPanInteraction) {
   // #############################
   // # Feature Categories preset #
   // #############################
-   $("#feature-categories-input").click(function() { });  
+  // Note: settings of data here are used for map-text display in osm-preview.js
+  var featureCategories = ["food-drink", "schools", "money", "entertainment", "medical", "public", "tourism", "shopping", "leisure"];
+  for (var i = 0; i < featureCategories.length; i++) {
+    data.set("feature-category-" + featureCategories[i], false, { silent: false }); // initialize all feature-categories in data
+  }
+  // Style Error: Don't make functions within a loop, so had to do this :( 
+  $("#feature-category-food-drink").click(function() { data.set("feature-category-food-drink", this.checked, { silent: false }); });  
+  $("#feature-category-schools").click(function() { data.set("feature-category-schools", this.checked, { silent: false }); });
+  $("#feature-category-money").click(function() { data.set("feature-category-money", this.checked, { silent: false }); });
+  $("#feature-category-entertainment").click(function() { data.set("feature-category-entertainment", this.checked, { silent: false }); });
+  $("#feature-category-medical").click(function() { data.set("feature-category-medical", this.checked, { silent: false }); });
+  $("#feature-category-public").click(function() { data.set("feature-category-public", this.checked, { silent: false }); });
+  $("#feature-category-tourism").click(function() { data.set("feature-category-tourism", this.checked, { silent: false }); });
+  $("#feature-category-shopping").click(function() { data.set("feature-category-shopping", this.checked, { silent: false }); });
+  $("#feature-category-leisure").click(function() { data.set("feature-category-leisure", this.checked, { silent: false }); });
 
   // Advanced mode
   $("#advanced-input").click(function(){
