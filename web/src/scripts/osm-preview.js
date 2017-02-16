@@ -142,11 +142,10 @@ window.initOsmPreview = function(outputs) {
     // They query for features that match the theme in their variable name, eg medicalOptions
     // will query for hospitals etc.
     var pedestrianOptions = "" + 
-      "(\"Other Points of Interest\";[name][highway!~\".\"][railway!~\".\"][landuse!~\".\"]" +
-      "[type!~\"route|network|associatedStreet\"][public_transport!~\".\"][route!~\"" +
-      "bus|ferry|railway|train|tram|trolleybus|subway|light_rail\"];\"name\";)(\"" +
-      "Streets\";[highway~\"primary|secondary|tertiary|residential|unclassified\"];\"" +
-      "name\";)";
+      "(\"Streets\";[highway~\"primary|secondary|tertiary|residential|unclassified\"];\"" +
+      "name\";)(\"Other Points of Interest\";[name][highway!~\".\"][railway!~\".\"]" +
+      "[landuse!~\".\"][type!~\"route|network|associatedStreet\"][public_transport!~\".\"]" + 
+      "[route!~\"bus|ferry|railway|train|tram|trolleybus|subway|light_rail\"];\"name\";)";
 
     var transitOptions = "" +
       "(\"Streets\";[highway~\"primary|secondary|tertiary|residential|unclassified\"]" +

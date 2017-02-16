@@ -72,7 +72,7 @@
     </div>
     <div class="col col2">
       <ul style="list-style: none;">
-        <li><p>{{ feature_category_preamble }}</p>
+        <li><p><b>{{ feature_category_preamble }}</b></p>
         <li><input id="feature-category-food-drink" type="checkbox" />
             <label for="feature-category-food-drink">{{ feature_category_food_drink }}</label>
         <li><input id="feature-category-schools" type="checkbox" />
@@ -199,15 +199,13 @@
       </div>
     </div>
   </div>
-
-  <div class="row main-row submit-row">
-    <input type="submit" id="submit-button" class="large-row green-button"
-           value="{{ create_tactile_map }}" data-original-text="{{ create_tactile_map }}"
-           aria-live="polite" />
+  
+  <div class="row main-row">
+    <hr>
   </div>
 
   <div class="drag-map-with-mouse">
-    {{ drag_map }}
+    <b>{{ drag_map }}</b>
   </div>
 
   <div id="map-area-preview-container" class="square-block-container" aria-label="{{ map_area_preview_label }}" style="display: none">
@@ -233,6 +231,12 @@
   <div id="pointsOfInterestMapContent"
        style="padding:10px; background-color:white; border:1px solid black; border-radius: 8px; word-wrap: break-word;">
     <!-- Contents (list) inserted by updatePointsOfInterestMapContent() JavaScript function in osm-preview.js -->
+  </div>
+
+  <div class="row main-row submit-row">
+    <input type="submit" id="submit-button" class="large-row green-button"
+           value="{{ create_tactile_map }}" data-original-text="{{ create_tactile_map }}"
+           aria-live="polite" />
   </div>
 
   <a class="back-to-previous-page" href=".">Back to address search</a>
