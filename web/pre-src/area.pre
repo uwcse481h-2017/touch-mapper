@@ -54,11 +54,11 @@
     </div>
     <div class="col col2">
       <select class="grey-in-advanced" id="map-styles-preset" data-initial="select">
-        <!--############## Change with language generalities ########################################-->
-        <option value="select">&ndash; Select a map style for basic map features &ndash;</option>
-        <option value="default">Default &ndash; buildings, paths, roads, water features, some public transportation</option>
-        <option value="public-transportation">Public Transportation &ndash; more public transportation details</option>
-        <option value="pedestrian">Pedestrian &ndash; building entrances, path details, street furniture, barriers, natural features</option>
+        <option value="select">{{ map_styles_select }}</option>
+        <option style="word-wrap: break-word;" value="default">{{ map_styles_default }}
+        </option>
+        <option style="word-wrap: break-word;" value="public-transportation">{{ map_styles_public_transport }}</option>
+        <option style="word-wrap: break-word;" value="pedestrian">{{ map_styles_pedestrian }}</option>
       </select>
     </div>
   </div>
@@ -72,8 +72,7 @@
     </div>
     <div class="col col2">
       <ul style="list-style: none;">
-        <!--############## Change with language generalities #######################################-->
-        <li><p>Select feature categories to include with the selected map style</p>
+        <li><p>{{ feature_category_preamble }}</p>
         <li><input id="feature-category-food-drink" type="checkbox" />
             <label for="feature-category-food-drink">{{ feature_category_food_drink }}</label>
         <li><input id="feature-category-schools" type="checkbox" />
@@ -96,7 +95,7 @@
     </div>
   </div>
 
-  <div class="row main-row advanced-toggle">
+  <!--div class="row main-row advanced-toggle">
     <div class="col col1">
       <label>{{ advanced_settings }}:</label>
     </div>
@@ -107,7 +106,7 @@
         (<%- @t('printing_tips_full', { startLink: '<a href="#multipart-maps">', endLink: '</a>' }) %>)
       </span>
     </div>
-  </div>
+  </div-->
 
   <div id="advanced-controls" style="display: none">
 
@@ -228,6 +227,8 @@
       <div class="arrow right"></div>
     </div>
   </div>
+
+  <div><b>{{ map_content_prelabel }}</b></div>
 
   <div id="pointsOfInterestMapContent"
        style="padding:10px; background-color:white; border:1px solid black; border-radius: 8px; word-wrap: break-word;">

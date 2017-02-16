@@ -6,7 +6,7 @@
  */
 html,
 body {
-  background-color: #f0f0f0;
+  background-color: #f0f0f0; /* light grey */
 	min-width: 320px;
 }
 html,
@@ -27,18 +27,18 @@ a {
 }
 input:invalid {
   border-color: red !important;
-  box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.5); /* red */
 }
 input {
-  background-color: #ffffff;
+  background-color: #ffffff; /* white */
   transition-duration: 0.2s;
 }
 
 input:hover,
 input:focus {
-  background-color: #ffffcc;
+  background-color: #f0f0f0; /* light grey, used to be gross pale yellow ffffcc*/
   transition-duration: 0.2s;
-  border-color: #888;
+  border-color: #888; /* dark grey */
 }
 input[type=submit] {
   appearance: none;
@@ -67,7 +67,7 @@ h2 {
   min-height: 100vh; // extend white BG to at least the bottom
   border-bottom: 1px solid transparent; // keep contained bottom margins collapsing with body's, which would leave a bar of grey to the top
   background-color: white;
-  box-shadow: 0 0 30px #ddd;
+  box-shadow: 0 0 30px #ddd; /* light grey */
   overflow: hidden;
 }
 .content {
@@ -157,18 +157,21 @@ input[type=radio] {
   cursor: pointer;
   height: auto;
   padding: 7px 10px;
-  box-shadow: 0px 3px 9px 0px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 3px 9px 0px rgba(0, 0, 0, 0.3); /* black */
 }
 .submit-row {
   margin-bottom: 30px;
 }
 
 .green-button {
-  background-color: @green;
+  color: white;
+  font-size: 19px;
+  font-weight: bold;
+  background-color: #000000; /* ######## used to be @green ######## */
   transition-duration: 0.2s;
 }
 .green-button:hover {
-  background-color: darken(@green, 5%);
+  background-color: lighten(#000000, 30%); /* ######## used to be @green ######## */
 }
 
 .back-to-previous-page::before {

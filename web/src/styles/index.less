@@ -22,7 +22,7 @@
   }
   .bullet {
     margin-right: 15px;
-    color: white;
+    color: #000000; /* black, but used to be white */
     font-weight: bold;
     width: 12px;
     text-align: center;
@@ -31,7 +31,7 @@
   .bullet:before {
     content: "";
     z-index: -1;
-    background-color: #84ff00;
+    background-color: #f0f0f0; /* light grey, but used to be light green, #84ff00 */
     width: 30px;
     height: 30px;
     border-radius: 15px;
@@ -77,15 +77,17 @@
   border: 0;
   padding: 0 10px;
   height: @form-field-height;
+  color: white;
+  font-weight: bold;
   font-size: 100%;
   font-family: 'Quattrocento Sans';
-  background-color: @orange;
+  background-color: #000000; /* used to be @orange */
   height: 26px;
   cursor: pointer;
 }
 #address-search-submit:hover {
   transition-duration: 0.2s;
-  background-color: lighten(saturate(@orange, 100%), 5%);
+  background-color: lighten(saturate(#000000, 100%), 5%); /* used to be @orange */
 }
 
 #no-search-results {
