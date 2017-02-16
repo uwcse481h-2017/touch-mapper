@@ -40,6 +40,7 @@
 </div>
 
 <p class="help-has-more-info">
+  {{ based_on_touch_mapper }}<br>
   <%- @t('help_has_more_info', { startTag: '<a href="help" target="_blank">', endTag: '</a>' }) %>.
 </p>
 
