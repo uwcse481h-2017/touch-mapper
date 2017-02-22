@@ -81,7 +81,7 @@ def run_osm_to_tactile(progress_updater, osm_path, request_body):
         stl_path = os.path.dirname(osm_path) + '/map.stl'
         if os.path.exists(stl_path):
             os.rename(stl_path, stl_path + ".old")
-        args = ['--scale', str(request_body['scale']), '--diameter', str(request_body['diameter']) ]
+        args = ['--scale', str(request_body['scale']), '--diameter', str(request_body['diameter'])] ### <-- Add '--foreground' flag here (with nothing else) for Blender UI
         if request_body.get('noBorders', False):
             args.append('--no-borders')
         if 'marker1' in request_body:

@@ -71,9 +71,29 @@
 
     $("#submit-button").attr("disabled", true);
     $("#output").slideUp().empty();
+
+    var mapStylesPreset = document.getElementById('map-styles-preset');
+
     var msg = {
       addrShort: data.get("selected_addr_short"),
       addrLong: data.get("selected_addr_full"),
+
+      // Inserting Map Style into Request Body
+      mapStyle: mapStylesPreset.options[mapStylesPreset.selectedIndex].value,
+
+      // Inserting Feature Categories into Request Body
+      featureCategories: { 
+         foodDrink: data.get("feature-category-food-drink"),
+         schools: data.get("feature-category-schools"),
+         money: data.get("feature-category-money"),
+         entertainment: data.get("feature-category-entertainment"),
+         medical: data.get("feature-category-medical"),
+         public: data.get("feature-category-public"),  // public as a keyword is not a problem
+         tourism: data.get("feature-category-tourism"),
+         shopping: data.get("feature-category-shopping"),
+         leisure: data.get("feature-category-leisure") 
+      },
+
       offsetX: data.get("offsetX"),
       offsetY: data.get("offsetY"),
       size: data.get("size"),
