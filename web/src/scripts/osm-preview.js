@@ -135,7 +135,7 @@ window.initOsmPreview = function(outputs) {
     var bbox = "" + latMin + "," + lonMin + "," + latMax + "," + lonMax;
 
     // Building up the url for querying overpass popup api
-    var urlPrefix = "http://overpass-api.de/api/interpreter?data=[out:popup";
+    var urlPrefix = "https://overpass-api.de/api/interpreter?data=[out:popup";
     var urlPostfix = "];(node(" + bbox + ");<;);out;";
 
     // The following string variables are all different queries to include in the url
