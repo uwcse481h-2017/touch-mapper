@@ -133,21 +133,21 @@ public class ConversionFacade {
 		return Arrays.asList((WorldModule)
 				new RoadModule(),
 				new RailwayModule(),
+				new ParkingModule(),
 				new BuildingModule(),
-				new ParkingModule(), //
-				new TreeModule(), //
-				new StreetFurnitureModule(), //
-				new TrafficSignModule(), //
-				new WaterModule()
-				new PoolModule(), //
-				new GolfModule(), //
-				new CliffModule(), //
-				new BarrierModule(), //
-				new PowerModule(), //
-				new BridgeModule(), //
-				new TunnelModule(), //
-				new SurfaceAreaModule(), //
-				new InvisibleModule() //
+				new TreeModule(), 
+				new StreetFurnitureModule(), 
+				new TrafficSignModule(), 
+				new WaterModule(),
+				new PoolModule(),
+				new GolfModule(), 
+				new CliffModule(), 
+				new BarrierModule(), 
+				new PowerModule(), 
+				new BridgeModule(), 
+				new TunnelModule(),
+				new SurfaceAreaModule(), 
+				new InvisibleModule() 
 		);
 		
 	}
