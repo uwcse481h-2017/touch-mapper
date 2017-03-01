@@ -10,8 +10,10 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.openstreetmap.josm.plugins.graphview.core.data.TagGroup;
 import org.osm2world.core.map_data.data.MapArea;
@@ -94,6 +96,7 @@ public class ObjTarget extends FaceTarget<RenderableToObj> {
 			 * and the underlying OSM element's name/ref tags */
 			
 			String roadSuffix = null;
+			String foodAndDrinkSuffix = null;
 			
 			MapElement element = object.getPrimaryMapElement();
 			OSMElement osmElement;
@@ -119,15 +122,14 @@ public class ObjTarget extends FaceTarget<RenderableToObj> {
 			if (roadSuffix == null) {
 				roadSuffix = isPath(osmElement.tags) ? "::pedestrian" : "";
 			}
-			
+
 			if (osmElement != null && osmElement.tags.containsKey("name")) {
-				objStream.println("o " + object.getClass().getSimpleName() + " " + osmElement.tags.getValue("name") + roadSuffix);
+				objStream.println("o " + object.getClass().getSimpleName() + " " + osmElement.tags.getValue("name") + roadSuffix + getFeatureCategorysString(osmElement.tags));
 			} else if (osmElement != null && osmElement.tags.containsKey("ref")) {
-				objStream.println("o " + object.getClass().getSimpleName() + " " + osmElement.tags.getValue("ref") + roadSuffix);
+				objStream.println("o " + object.getClass().getSimpleName() + " " + osmElement.tags.getValue("ref") + roadSuffix + getFeatureCategorysString(osmElement.tags));
 			} else {
-				objStream.println("o " + object.getClass().getSimpleName() + anonymousWOCounter ++ + roadSuffix);
+				objStream.println("o " + object.getClass().getSimpleName() + anonymousWOCounter ++ + roadSuffix + getFeatureCategorysString(osmElement.tags));
 			}
-			
 		}
 		
 	}
@@ -159,6 +161,85 @@ public class ObjTarget extends FaceTarget<RenderableToObj> {
 		return false;
 	}
 
+        private static final Map<String, Set<String>> featureCategoriesToTags = new HashMap<String, Set<String>>() {{
+		put("FoodAndDrink", new HashSet<String>() {{
+                	add("bar"); add("bbq"); add("biergarten"); add("cafe"); add("drinking_water"); 
+			add("fast_food"); add("food_court"); add("ice_cream"); add("pub"); add("restaurant");	
+		}});
+                put("Schools", new HashSet<String>() {{
+			add("college"); add("kindergarten"); add("library"); add("school"); add("music_school"); 
+			add("driving_school"); add("language_school"); add("university");
+		}});
+		put("Money", new HashSet<String>() {{
+			add("bank"); add("atm"); add("bureau_de_change");
+		}});
+		put("Entertainment", new HashSet<String>() {{
+			add("arts_center"); add("brothel"); add("casino"); add("cinema"); add("gambling"); 
+			add("studio"); add("community_center"); add("nightclub"); add("planetarium"); 
+			add("social_centre"); add("stripclub"); add("theater"); add("swingerclub");
+		}});
+		put("Medical", new HashSet<String>() {{
+			add("clinic"); add("dentist"); add("doctors"); add("hospital"); add("nursing_home"); 
+			add("pharmacy"); add("social_facility"); add("veterinary"); add("blood_donation");
+		}});
+		put("Public", new HashSet<String>() {{
+			add("courthouse"); add("embassy"); add("fire_station"); add("internet_cafe");
+			add("marketplace"); add("police"); add("post_office"); add("prison"); add("toilets"); 
+			add("vending_machine");
+		}});
+		put("Leisure", new HashSet<String>() {{
+ 			add("adult_gaming_centre"); add("amusement_arcade"); add("bandstand"); 
+			add("beach_resort"); add("common"); add("dance"); add("firepit"); add("fishing"); 
+			add("fitness_centre"); add("hackerspace"); add("ice_rink"); add("horse_riding"); 
+			add("marina"); add("miniature_golf"); add("picnic_table"); add("sports_centre"); 
+			add("stadium"); add("track"); add("summer_camp"); add("water_park");
+                }});
+		// Tourism & Shopping do not have any value tags to consider
+        }};
+
+	// Returns the string of feature categories associated with this tag group, where each category
+	// is delimited by a "::"
+	private static String getFeatureCategorysString(TagGroup tags) {
+		String resultString = "";
+		
+		String amenityValue = tags.getValue("amenity");
+		String tourismValue = tags.getValue("tourism");
+		String shoppingValue = tags.getValue("shop");
+		String leisureValue = tags.getValue("leisure");
+
+		if (amenityValue != null) {
+			// see if we have a foodAndDrink, school, money, entertainment, medical, or public
+			if (featureCategoriesToTags.getOrDefault("FoodAndDrink", new HashSet<String>()).contains(amenityValue)) {
+				resultString += "::FoodAndDrink";
+			}
+			if (featureCategoriesToTags.getOrDefault("Schools", new HashSet<String>()).contains(amenityValue)) {
+				resultString += "::Schools";
+			}
+			if (featureCategoriesToTags.getOrDefault("Money", new HashSet<String>()).contains(amenityValue)) {
+				resultString += "::Money";
+			}
+			if (featureCategoriesToTags.getOrDefault("Entertainment", new HashSet<String>()).contains(amenityValue)) {
+				resultString += "::Entertainment";
+			}
+			if (featureCategoriesToTags.getOrDefault("Medical", new HashSet<String>()).contains(amenityValue)) {
+				resultString += "::Medical";
+			}
+			if (featureCategoriesToTags.getOrDefault("Public", new HashSet<String>()).contains(amenityValue)) {
+				resultString += "::Public";
+			}
+		}
+		if (tourismValue != null) {
+			resultString += "::Tourism";
+		}
+		if (shoppingValue != null) {
+			resultString += "::Shopping";
+		}
+		if (leisureValue != null && featureCategoriesToTags.getOrDefault("Leisure", new HashSet<String>()).contains(leisureValue)) {
+			resultString += "::Leisure";
+		}
+
+		return resultString;
+	}
 	
 	@Override
 	public void drawFace(Material material, List<VectorXYZ> vs,
