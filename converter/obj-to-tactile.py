@@ -13,8 +13,8 @@ import time
 
 ROAD_HEIGHT_CAR_MM = 0.82 # 3 x 0.25-0.3mm layers
 ROAD_HEIGHT_PEDESTRIAN_MM = 1.5
-BUILDING_HEIGHT_MM = 2.9
-BASE_HEIGHT_MM = 0.6
+BUILDING_HEIGHT_MM = 0.75 # 2.9
+BASE_HEIGHT_MM = 1.75 # 0.6 Jess's--1.75?
 BASE_OVERLAP_MM = 0.01
 WATER_AREA_DEPTH_MM = 1.5
 WATER_WAVE_DISTANCE_MM = 10.3
@@ -100,15 +100,9 @@ def create_cube(min_x, min_y, max_x, max_y, min_z, max_z):
 
 def add_borders(min_x, min_y, max_x, max_y, width, bottom, height, corner_height):
     borders = []
-    borders.append(create_cube(min_x, min_y, min_x + width, max_y, bottom, height))
-    borders.append(create_cube(max_x, min_y, max_x - width, max_y, bottom, height))
-    borders.append(create_cube(min_x + width*0.99, min_y, max_x - width*0.99, min_y + width, bottom, height))
-    borders.append(create_cube(min_x + width*0.99, max_y, max_x - width*0.99, max_y - width, bottom, height))
+    # north edge
+    borders.append(create_cube(min_x, max_y, max_x, max_y - width, bottom, height))
     join_objects(borders, 'Borders')
-
-    # Marker for north-east corner
-    create_cube(max_x - width*0.99, max_y - width*0.99, max_x - width*2.7, max_y - width*2.7, 0, height).name = 'CornerInside'
-    create_cube(max_x, max_y, max_x - width*3, max_y - width*3, height*0.99, corner_height).name = 'CornerTop'
 
 def create_bounds(min_x, min_y, max_x, max_y, scale, no_borders):
     mm_to_units = scale / 1000
@@ -152,10 +146,10 @@ def import_obj_file(obj_path):
 def extrude_building(ob, height):
     bpy.ops.object.mode_set(mode = 'EDIT')
     bpy.ops.mesh.select_all(action='SELECT')
-    bpy.ops.mesh.extrude_region_move(TRANSFORM_OT_translate={ "value": (0.0, 0.0, height) })
+    bpy.ops.mesh.extrude_region_move(TRANSFORM_OT_translate={ "value": (0.0, 0.0, height) })    
     bpy.ops.mesh.select_all(action='SELECT')
     bpy.ops.mesh.normals_make_consistent()
-    bpy.ops.object.mode_set(mode = 'OBJECT')
+    bpy.ops.object.mode_set(mode = 'OBJECT') 
 
 def clip_object_to_map(ob, min_co, max_co):
     try:
@@ -448,15 +442,25 @@ def do_road_areas(roads, height):
     fatten(roads)
     #print("processing %s took %.2f" % (roads.name, time.clock() - t))
 
+def do_building(building, mm_to_units):
+    if building == None:
+        return
+    extrude_building(building, BUILDING_HEIGHT_MM * mm_to_units)
+    # move the buliding down 1.5 units
+    bpy.context.scene.objects.active = building
+    bpy.ops.object.mode_set(mode='EDIT')
+    bpy.ops.transform.translate(value=(0, 0, -1.5))
+    bpy.ops.object.mode_set(mode='OBJECT')
+
 def process_objects(min_x, min_y, max_x, max_y, scale, no_borders):
     t = time.clock()
     mm_to_units = scale / 1000
     if not no_borders:
         space = (BORDER_WIDTH_MM - BORDER_HORIZONTAL_OVERLAP_MM) * mm_to_units 
-        min_x = min_x + space
-        min_y = min_y + space
-        max_x = max_x - space
-        max_y = max_y - space
+        min_x = min_x
+        min_y = min_y
+        max_x = max_x
+        max_y = max_y - space # to make room for the north edge
     min_co = (min_x, min_y, 0)
     max_co = (max_x, max_y, 0)
 
@@ -538,15 +542,6 @@ def process_objects(min_x, min_y, max_x, max_y, scale, no_borders):
     joined_road_areas_car = join_and_clip(road_areas_car, min_co, max_co, 'CarRoadAreas')
     joined_road_areas_ped = join_and_clip(road_areas_ped, min_co, max_co, 'PedestrianRoadAreas')
     clipped_rails = join_and_clip(rails, min_co, max_co, 'Rails')
-    joined_buildings = join_and_clip(buildings, min_co, max_co, 'Buildings')
-    
-    # Buildings
-    print('META-START:{"building_count":%d}:META-END\n' % (len(buildings)))
-    if joined_buildings:
-        t = time.clock()
-        extrude_building(joined_buildings, BUILDING_HEIGHT_MM * mm_to_units)
-        fatten(joined_buildings)
-        print("processing %d buildings took %.2f" % (len(buildings), time.clock() - t))
 
     # Waters
     t = time.clock()
@@ -576,6 +571,27 @@ def process_objects(min_x, min_y, max_x, max_y, scale, no_borders):
     do_road_areas(joined_road_areas_ped, ROAD_HEIGHT_PEDESTRIAN_MM * mm_to_units)
     do_ways(joined_roads_car, ROAD_HEIGHT_CAR_MM * mm_to_units, min_x, min_y, max_x, max_y)
     do_ways(joined_roads_ped, ROAD_HEIGHT_PEDESTRIAN_MM * mm_to_units, min_x, min_y, max_x, max_y)
+    
+
+    # Buildings
+
+    # first shrink them individually
+    for building in buildings:
+        bpy.ops.object.mode_set(mode='OBJECT')
+        bpy.context.scene.objects.active = building
+        bpy.ops.object.origin_set(type='ORIGIN_GEOMETRY')
+        bpy.ops.object.mode_set(mode='EDIT')
+        bpy.ops.transform.resize(value=(0.75, 0.75, 1)) # shrinks on x and y axis by 0.75
+        bpy.ops.object.mode_set(mode='OBJECT')
+
+    # then join, clip, and process them as one unit
+    joined_buildings = join_and_clip(buildings, min_co, max_co, 'Buildings')
+    print('META-START:{"building_count":%d}:META-END\n' % (len(buildings)))
+    if joined_buildings:
+        t = time.clock()
+        do_building(joined_buildings, mm_to_units)
+        print("processing %d buildings took %.2f" % (len(buildings), time.clock() - t))
+
 
 def make_tactile_map(args):
     t = time.clock()
@@ -586,6 +602,19 @@ def make_tactile_map(args):
 
     # Create the support cube and borders
     base_cube = create_bounds(min_x, min_y, max_x, max_y, args.scale, args.no_borders)
+
+    # Dig out the buildings by boolean differencing the base with them
+    bpy.ops.object.mode_set(mode='OBJECT')
+    bpy.context.scene.objects.active = bpy.data.objects['Base']
+    bpy.ops.object.modifier_add(type='BOOLEAN')
+    bpy.context.object.modifiers["Boolean"].operation = 'DIFFERENCE'
+    bpy.context.object.modifiers["Boolean"].object = bpy.data.objects['Buildings']
+    bpy.ops.object.modifier_apply(apply_as='DATA', modifier='Boolean')
+
+    # Delete the buildings so we can see them inset rather than protruding
+    bpy.data.objects['Base'].select = False
+    bpy.data.objects['Buildings'].select = True
+    bpy.ops.object.delete()
 
     # Add marker(s)
     if args.marker1 != None:
