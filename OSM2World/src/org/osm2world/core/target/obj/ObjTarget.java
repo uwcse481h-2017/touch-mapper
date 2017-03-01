@@ -124,12 +124,17 @@ public class ObjTarget extends FaceTarget<RenderableToObj> {
 			}
 
 			if (osmElement != null && osmElement.tags.containsKey("name")) {
-				objStream.println("o " + object.getClass().getSimpleName() + " " + osmElement.tags.getValue("name") + roadSuffix + getFeatureCategorysString(osmElement.tags));
+				objStream.print("o " + object.getClass().getSimpleName() + " " + osmElement.tags.getValue("name") + roadSuffix);
 			} else if (osmElement != null && osmElement.tags.containsKey("ref")) {
-				objStream.println("o " + object.getClass().getSimpleName() + " " + osmElement.tags.getValue("ref") + roadSuffix + getFeatureCategorysString(osmElement.tags));
+				objStream.print("o " + object.getClass().getSimpleName() + " " + osmElement.tags.getValue("ref") + roadSuffix);
 			} else {
-				objStream.println("o " + object.getClass().getSimpleName() + anonymousWOCounter ++ + roadSuffix + getFeatureCategorysString(osmElement.tags));
+				objStream.print("o " + object.getClass().getSimpleName() + anonymousWOCounter ++ + roadSuffix);
 			}
+			
+			// Add Feature Category Tags
+			objStream.print(getFeatureCategorysString(osmElement.tags));
+			// objStream.print(osmElement.tags); // for debugging
+			objStream.println();			
 		}
 		
 	}

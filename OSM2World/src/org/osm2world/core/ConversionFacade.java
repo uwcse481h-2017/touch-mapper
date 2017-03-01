@@ -50,6 +50,7 @@ import org.osm2world.core.world.modules.CliffModule;
 import org.osm2world.core.world.modules.GolfModule;
 import org.osm2world.core.world.modules.InvisibleModule;
 import org.osm2world.core.world.modules.ParkingModule;
+import org.osm2world.core.world.modules.PointOfInterestModule; //***********************
 import org.osm2world.core.world.modules.PoolModule;
 import org.osm2world.core.world.modules.PowerModule;
 import org.osm2world.core.world.modules.RailwayModule;
@@ -133,23 +134,23 @@ public class ConversionFacade {
 		return Arrays.asList((WorldModule)
 				new RoadModule(),
 				new RailwayModule(),
-				new ParkingModule(),
 				new BuildingModule(),
-				new TreeModule(), 
-				new StreetFurnitureModule(), 
-				new TrafficSignModule(), 
-				new WaterModule(),
-				new PoolModule(),
-				new GolfModule(), 
-				new CliffModule(), 
-				new BarrierModule(), 
-				new PowerModule(), 
-				new BridgeModule(), 
-				new TunnelModule(),
-				new SurfaceAreaModule(), 
-				new InvisibleModule() 
+				new PointOfInterestModule(), //************************
+				new WaterModule()
+                                //new ParkingModule(), //
+				//new TreeModule(), //
+				//new StreetFurnitureModule(), //
+				//new TrafficSignModule(), //
+				//new PoolModule(), //
+				//new GolfModule(), //
+				//new CliffModule(), //
+				//new BarrierModule(), //
+				//new PowerModule(), //
+				//new BridgeModule(), //
+				//new TunnelModule(), //
+				//new SurfaceAreaModule(), //
+				//new InvisibleModule() //
 		);
-		
 	}
 
 	private Factory<? extends OriginMapProjection> mapProjectionFactory =
