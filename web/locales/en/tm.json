@@ -39,7 +39,7 @@
     "map_styles_public_transport": "Public Transportation – more public transportation details",
     "map_styles_pedestrian": "Pedestrian – building entrances, path details, street furniture, barriers, natural features",
     "feature_categories": "Feature categories",
-    "feature_category_preamble": "Select feature categories to include with the selected map style",
+    "feature_category_preamble": "Select up to three feature categories to include with the selected map style – any more than three, and the map may start to become too cluttered",
     "feature_category_food_drink": "Food and Drink – includes restaurants, cafes, food courts, and other food/drink amenities",
     "feature_category_schools": "Schools – includes colleges/universities, libraries, and other schools",
     "feature_category_money": "Money – includes banks, ATMs, and currency exchange offices",

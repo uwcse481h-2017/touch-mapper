@@ -4,6 +4,8 @@
 
   <h2>Map parameters</h2>
 
+  <h3>Please select a size, scale, style, and optional feature categories for your map. Once you've customized your map, you'll find a text description of what's included in the map at the bottom of the page.</h3>
+
   <div class="row main-row search-results-row">
     <div class="col col1"><label for="search-results">{{ address }}:</label></div>
     <div class="col col2">
