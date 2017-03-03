@@ -218,11 +218,12 @@ function initialAddressAndParameters() {
     location.href = ".";
   }
   if (addresses.length > 1) {
-    $(".show-all-addresses")
-      .show()
-      .click(function(){
-        showAllAddresses(addresses);
-      });
+    showAllAddresses(addresses);
+    //$(".show-all-addresses")
+    //  .show()
+    //  .click(function(){
+    //    showAllAddresses(addresses);
+    //  });
   }
 
   $(".first-address").text(addr.addrLong);

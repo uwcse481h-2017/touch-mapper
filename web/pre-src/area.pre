@@ -10,7 +10,7 @@
     <div class="col col1"><label for="search-results">{{ address }}:</label></div>
     <div class="col col2">
       <span class="first-address"></span>
-      <button class="show-all-addresses" style="display: none" aria-description="Show all found addresses">Show all</button>
+      <!--button class="show-all-addresses" style="display: none" aria-description="Show all found addresses">Show all</button-->
       <ul class="all-addresses" style="display: none"></ul>
     </div>
   </div>
