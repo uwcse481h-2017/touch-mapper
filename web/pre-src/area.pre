@@ -55,8 +55,8 @@
       <label for="map-styles-preset">{{ map_styles }}:</label>
     </div>
     <div class="col col2">
-      <select class="grey-in-advanced" id="map-styles-preset" data-initial="select">
-        <option value="select">{{ map_styles_select }}</option>
+      <select class="grey-in-advanced" id="map-styles-preset" data-initial="default">
+        <!--option value="select">{{ map_styles_select }}</option-->
         <option style="word-wrap: break-word;" value="default">{{ map_styles_default }}
         </option>
         <option style="word-wrap: break-word;" value="public-transportation">{{ map_styles_public_transport }}</option>
