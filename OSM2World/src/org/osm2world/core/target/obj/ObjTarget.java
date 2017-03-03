@@ -56,7 +56,7 @@ public class ObjTarget extends FaceTarget<RenderableToObj> {
 		
 		this.objStream = objStream;
 		this.mtlStream = mtlStream;
-				
+
 	}
 	
 	@Override

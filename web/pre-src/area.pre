@@ -228,9 +228,15 @@
     </div>
   </div>
 
-  <div><b>{{ map_content_prelabel }}</b></div>
+  <div class="row main-row">
+    <b>{{ map_content_prelabel }}</b>
+  </div>
 
-  <div id="pointsOfInterestMapContent"
+  <!-- ################################## -->
+  <!-- # Points of Interset Map Content # -->
+  <!-- ################################## -->
+  <div class="row"
+       id="pointsOfInterestMapContent"
        style="padding:10px; background-color:white; border:1px solid black; border-radius: 8px; word-wrap: break-word; height: 300px; overflow: auto;">
     <!-- Contents (list) inserted by updatePointsOfInterestMapContent() JavaScript function in osm-preview.js -->
   </div>
