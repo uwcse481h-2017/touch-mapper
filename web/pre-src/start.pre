@@ -58,12 +58,13 @@
           </h1>
           <p>{{ blurb }}</p>
           <div class="top-corner">
-            <label for="language-selector" class="visuallyhidden">{{ language }}</label>
+            <!--label for="language-selector" class="visuallyhidden">{{ language }}</label>
             <select class="language-selector" id="language-selector">
               <option value="en">English</option>
               <option value="de">Deutsch</option>
               <option value="fi">Suomi</option>
-            </select><a class="help-link" href="help" target="_blank" aria-label="Open help in a new tab">{{ help }}</a>
+            </select-->
+            <a class="help-link" href="help" target="_blank" aria-label="Open help in a new tab">{{ help }}</a>
           </div>
         </div>
       </div>
