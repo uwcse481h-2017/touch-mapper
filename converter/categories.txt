@@ -1,0 +1,35 @@
+FoodAndDrink
+	amenity bar bbq biergarten cafe drinking_water fast_food food_court ice_cream pub restaurant
+	name
+
+Schools
+	amenity college kindergarten library school music_school driving_school language_school university
+	name
+
+Money
+	amenity bank bureau_de_change atm
+	name
+
+Entertainment
+	amenity arts_center brothel casino cinema community_center gambling nightclub planetarium social_centre stripclub studio swingerclub theater
+	name
+
+Medical
+	amenity clinic dentist doctors hospital nursing_home pharmacy social_facility veterinary blood_donation
+	name
+
+Public
+	amenity courthouse embassy fire_station internet_cafe marketplace police post_office prison toilets vending_machine
+	name
+
+Tourism
+	tourism apartment aquarium artwork attraction gallery guest_house hostel hotel information motel museum picnic_site zoo
+	name
+
+Shopping
+	shop
+	name
+
+Leisure
+	leisure adult_gaming_centre amusement_arcade beach_resort bandstand common dance firepit fishing fitness_centre hackerspace horse_riding ice_rink marina miniature_golf picnic_table sports_centre stadium summer_camp track water_park
+	name
