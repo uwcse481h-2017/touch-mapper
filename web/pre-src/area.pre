@@ -1,13 +1,18 @@
+<!DOCTYPE HTML>
 <div id="mainArea" class="show-on-load" style="display: none">
   <script src="../scripts/aws-sdk-2.3.3.min.js"></script>
   <script src="../scripts/ol-3.15.1-custom.min.js"></script>
 
   <h2>Map parameters</h2>
 
-  <h3>Please select a size, scale, style, and optional feature categories for your map. Once you've customized your map, you'll find a text description of what's included in the map at the bottom of the page.</h3>
+  <h3>
+     Please select a size, scale, style, and optional feature categories for your map. Once you've customized your map, you'll find a text description of what's included in the map at the bottom of the page.
+  </h3>
 
-  <div class="row main-row search-results-row">
-    <div class="col col1"><label for="search-results">{{ address }}:</label></div>
+ <div class="row main-row search-results-row">
+    <div class="col col1">
+      <h3><label for="search-results">{{ address }}:</label></h3>
+    </div>
     <div class="col col2">
       <span class="first-address"></span>
       <!--button class="show-all-addresses" style="display: none" aria-description="Show all found addresses">Show all</button-->
@@ -17,7 +22,7 @@
 
   <div class="row main-row map-size-preset-row grey-in-advanced">
     <div class="col col1">
-      <label for="map-size-preset">{{ map_size }}:</label>
+      <h3><label for="map-size-preset">{{ map_size }}:</label></h3>
     </div>
     <div class="col col2">
       <select class="grey-in-advanced" id="map-size-preset">
@@ -30,7 +35,7 @@
 
   <div class="row main-row map-scale-preset-row grey-in-advanced">
     <div class="col col1">
-      <label for="map-scale-preset">{{ map_scale }}:</label>
+      <h3><label for="map-scale-preset">{{ map_scale }}:</label></h3>
     </div>
     <div class="col col2">
       <select class="grey-in-advanced" id="map-scale-preset" data-initial="2400">
@@ -47,12 +52,12 @@
     </div>
   </div>
 
-  <!--###########################-->
-  <!--# for map style selection #-->
-  <!--###########################-->
+  <!-- ########################### -->
+  <!-- # for map style selection # -->
+  <!-- ########################### -->
   <div class="row main-row map-styles-preset-row grey-in-advanced">
     <div class="col col1">
-      <label for="map-styles-preset">{{ map_styles }}:</label>
+      <h3><label for="map-styles-preset">{{ map_styles }}:</label></h3>
     </div>
     <div class="col col2">
       <select class="grey-in-advanced" id="map-styles-preset" data-initial="default">
@@ -65,12 +70,12 @@
     </div>
   </div>
 
-  <!--##################################-->
-  <!--# for feature category selection #-->
-  <!--##################################-->
+  <!-- ################################## -->
+  <!-- # for feature category selection # -->
+  <!-- ################################## -->
   <div class="row main-row feature-categories-preset-row grey-in-advanced">
     <div class="col col1">
-      <label>{{ feature_categories }}:</label>
+      <h3><label>{{ feature_categories }}:</label></h3>
     </div>
     <div class="col col2">
       <ul style="list-style: none;">
@@ -207,7 +212,7 @@
   </div>
 
   <div class="drag-map-with-mouse">
-    <b>{{ drag_map }}</b>
+    <h3><b>{{ drag_map }}</b></h3>
   </div>
 
   <div id="map-area-preview-container" class="square-block-container" aria-label="{{ map_area_preview_label }}" style="display: none">
@@ -229,7 +234,7 @@
   </div>
 
   <div class="row main-row">
-    <b>{{ map_content_prelabel }}</b>
+    <h3><b>{{ map_content_prelabel }}</b></h3>
   </div>
 
   <!-- ################################## -->
@@ -242,12 +247,14 @@
   </div>
 
   <div class="row main-row submit-row">
-    <input type="submit" id="submit-button" class="large-row green-button"
-           value="{{ create_tactile_map }}" data-original-text="{{ create_tactile_map }}"
-           aria-live="polite" />
+    <h3 style="text-align: center">
+        <input type="submit" id="submit-button" class="large-row green-button"
+               value="{{ create_tactile_map }}" data-original-text="{{ create_tactile_map }}"
+               aria-live="polite" />
+    </h3>
   </div>
 
-  <a class="back-to-previous-page" href=".">Back to address search</a>
+  <h3 style="text-align: center"><a href=".">Back to address search</a></h3>
 
   <div id="marker1-overlay" class="marker-container" title="{{ tooltip_selected_address }}">
     <div class="marker1-star part1"></div>
