@@ -246,13 +246,13 @@
     <!-- Contents (list) inserted by updatePointsOfInterestMapContent() JavaScript function in osm-preview.js -->
   </div>
 
-  <div class="row main-row submit-row">
-    <h3 style="text-align: center">
-        <input type="submit" id="submit-button" class="large-row green-button"
-               value="{{ create_tactile_map }}" data-original-text="{{ create_tactile_map }}"
-               aria-live="polite" />
-    </h3>
-  </div>
+  <h3>
+    <div class="row main-row submit-row">
+      <input type="submit" id="submit-button" class="large-row green-button"
+             value="{{ create_tactile_map }}" data-original-text="{{ create_tactile_map }}"
+             aria-live="polite" />
+    </div>
+  </h3>
 
   <h3 style="text-align: center"><a href=".">Back to address search</a></h3>
 

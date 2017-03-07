@@ -1,3 +1,4 @@
+<!DOCTYPE HTML>
 <div class="show-on-load" style="display: none">
   <script src="../scripts/three-20160121.min.js"></script>
   <script src="../scripts/three-STLLoader-20160122.js"></script>
@@ -70,5 +71,5 @@
     </div>
   </div>
 
-  <a class="back-to-previous-page" href="area">Back to map parameters</a>
+  <h3 style="text-align: center"><a href="area">Back to map parameters</a></h3>
 </div>
