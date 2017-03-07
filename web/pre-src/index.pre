@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <div class="intro">
   <p>{{ intro }}</p>
 </div>
@@ -28,7 +29,7 @@
     <form id="address-search-form" action="#">
       <div class="address-input-container">
         <input id="address-input" value="" />
-       </div>
+      </div>
       <div class="address-search-submit-container">
         <input id="address-search-submit" value="{{ search }}" type="submit" />
       </div>
