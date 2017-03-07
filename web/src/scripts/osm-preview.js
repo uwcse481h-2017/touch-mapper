@@ -140,7 +140,12 @@ window.initOsmPreview = function(outputs) {
     var bbox = "" + latMin + "," + lonMin + "," + latMax + "," + lonMax;
 
     // Building up the url for querying overpass popup api
-    var urlPrefix = "https://overpass-api.de/api/interpreter?data=[out:popup";
+    // Originally used Overpass API Germany (de) but came across errors in format of the output
+    // French & Rambler/Russia (with http instead of https, may be issue for CloudFront) versions also seem to be working as of now 
+    //   var urlPrefix = "https://overpass-api.de/api"; // Overpass API Germany (de) (10,000 queries per day)
+    //   var urlPrefix = "http://overpass.osm.rambler.ru/cgi"; // Overpass API Rambler/Russia (ru) (10,000 queries per day
+    var urlPrefix = "https://api.openstreetmap.fr/oapi"; // Overpass API France (fr) (1,000 queries per day)
+    urlPrefix += "/interpreter?data=[out:popup";
     var urlPostfix = "];(node(" + bbox + ");<;);out;";
 
     // The following string variables are all different queries to include in the url
