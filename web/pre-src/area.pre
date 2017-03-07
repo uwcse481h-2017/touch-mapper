@@ -10,7 +10,7 @@
     <div class="col col1"><label for="search-results">{{ address }}:</label></div>
     <div class="col col2">
       <span class="first-address"></span>
-      <button class="show-all-addresses" style="display: none" aria-description="Show all found addresses">Show all</button>
+      <!--button class="show-all-addresses" style="display: none" aria-description="Show all found addresses">Show all</button-->
       <ul class="all-addresses" style="display: none"></ul>
     </div>
   </div>
@@ -35,13 +35,13 @@
     <div class="col col2">
       <select class="grey-in-advanced" id="map-scale-preset" data-initial="2400">
         <option value="1000">1:1000 &ndash; {{ map_scale__1000 }}</option>
-        <option value="1400">1:1400</option>
+        <!--option value="1400">1:1400</option-->
         <option value="1800">1:1800 &ndash; {{ map_scale__1800 }}</option>
         <option value="2400">1:2400 &ndash; {{ map_scale__2400 }}</option>
         <option value="3200">1:3200 &ndash; {{ map_scale__3200 }}</option>
-        <option value="4200">1:4200</option>
+        <!--option value="4200">1:4200</option-->
         <option value="5600">1:5600 &ndash; {{ map_scale__5600 }}</option>
-        <option value="7500">1:7500</option>
+        <!--option value="7500">1:7500</option-->
         <option value="9999">1:9999 &ndash; {{ map_scale__9999 }}</option>
       </select>
     </div>
@@ -55,8 +55,8 @@
       <label for="map-styles-preset">{{ map_styles }}:</label>
     </div>
     <div class="col col2">
-      <select class="grey-in-advanced" id="map-styles-preset" data-initial="select">
-        <option value="select">{{ map_styles_select }}</option>
+      <select class="grey-in-advanced" id="map-styles-preset" data-initial="default">
+        <!--option value="select">{{ map_styles_select }}</option-->
         <option style="word-wrap: break-word;" value="default">{{ map_styles_default }}
         </option>
         <option style="word-wrap: break-word;" value="public-transportation">{{ map_styles_public_transport }}</option>
