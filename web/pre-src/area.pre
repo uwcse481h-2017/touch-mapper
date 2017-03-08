@@ -222,17 +222,6 @@
     </div>
   </div>
 
-  <div aria-live="off" class="map-info" aria-label="{{ map_diameter }}">
-    <span class="texts">
-      <span class="current-diameter-meters" aria-live="off"></span> {{ meters }}
-      (<span class="current-diameter-yards" aria-live="off"></span> {{ yards }})
-    </span>
-    <div class="map-info-arrow">
-      <div class="arrow left"></div>
-      <div class="arrow right"></div>
-    </div>
-  </div>
-
   <div class="row main-row">
     <h3><b>{{ map_content_prelabel }}</b></h3>
   </div>
