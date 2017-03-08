@@ -131,6 +131,9 @@ def add_marker1(args, scale):
     bpy.ops.mesh.primitive_cone_add(vertices = 16, radius1 = radius, radius2 = radius / 8, depth = height, \
         location = [ min_x + (max_x - min_x) * marker_x, min_y + (max_y - min_y) * marker_y, height / 2 ])
     bpy.context.active_object.name = 'SelectedAddress'
+    bpy.ops.object.mode_set(mode='EDIT')
+    bpy.ops.transform.translate(value=(0, 0, -1.5))
+    bpy.ops.object.mode_set(mode='OBJECT')
 
 def remove_everything():
     bpy.ops.object.select_all(action='SELECT')
@@ -477,6 +480,7 @@ def process_objects(min_x, min_y, max_x, max_y, scale, no_borders):
     joinable_waterways = []
     inner_water_areas = []
     deleteables = []
+    points_of_interest = []
     for ob in bpy.context.scene.objects:
         if ob.type != 'MESH':
             continue
@@ -501,6 +505,8 @@ def process_objects(min_x, min_y, max_x, max_y, scale, no_borders):
                     roads_car.append(ob)
         elif ob.name.startswith('Rail'):
             rails.append(ob)
+        elif ob.name.startswith('Point'):
+            points_of_interest.append(ob)
         else:
             n_total = len(ob.data.vertices)
             n_outside = 0
@@ -542,6 +548,7 @@ def process_objects(min_x, min_y, max_x, max_y, scale, no_borders):
     joined_road_areas_car = join_and_clip(road_areas_car, min_co, max_co, 'CarRoadAreas')
     joined_road_areas_ped = join_and_clip(road_areas_ped, min_co, max_co, 'PedestrianRoadAreas')
     clipped_rails = join_and_clip(rails, min_co, max_co, 'Rails')
+    joined_pois = join_objects(points_of_interest, 'PointsOfInterest')
 
     # Waters
     t = time.clock()
@@ -571,22 +578,44 @@ def process_objects(min_x, min_y, max_x, max_y, scale, no_borders):
     do_road_areas(joined_road_areas_ped, ROAD_HEIGHT_PEDESTRIAN_MM * mm_to_units)
     do_ways(joined_roads_car, ROAD_HEIGHT_CAR_MM * mm_to_units, min_x, min_y, max_x, max_y)
     do_ways(joined_roads_ped, ROAD_HEIGHT_PEDESTRIAN_MM * mm_to_units, min_x, min_y, max_x, max_y)
-    
+
+    # lower the paths so they don't float above the inset buildings
+    if joined_road_areas_ped:
+        bpy.ops.object.mode_set(mode='OBJECT')
+        bpy.context.scene.objects.active = joined_road_areas_ped
+        bpy.ops.object.mode_set(mode='EDIT')
+        bpy.ops.transform.translate(value=(0, 0, -1.5))
+        bpy.ops.object.mode_set(mode='OBJECT')
+    if joined_roads_ped:
+        bpy.ops.object.mode_set(mode='OBJECT')
+        bpy.context.scene.objects.active = joined_roads_ped
+        bpy.ops.object.mode_set(mode='EDIT')
+        bpy.ops.transform.translate(value=(0, 0, -1.5))
+        bpy.ops.object.mode_set(mode='OBJECT')
+
+    # Points of Interest
+    # lower them so they don't float above the inset buildings
+    if joined_pois:
+        bpy.ops.object.mode_set(mode='OBJECT')
+        bpy.context.scene.objects.active = joined_pois
+        bpy.ops.object.mode_set(mode='EDIT')
+        bpy.ops.transform.translate(value=(0, 0, -1.5))
+        bpy.ops.object.mode_set(mode='OBJECT')
 
     # Buildings
-
     # first shrink them individually
-    for building in buildings:
-        bpy.ops.object.mode_set(mode='OBJECT')
-        bpy.context.scene.objects.active = building
-        bpy.ops.object.origin_set(type='ORIGIN_GEOMETRY')
-        bpy.ops.object.mode_set(mode='EDIT')
-        bpy.ops.transform.resize(value=(0.75, 0.75, 1)) # shrinks on x and y axis by 0.75
-        bpy.ops.object.mode_set(mode='OBJECT')
-
+    if len(buildings) > 0:
+        for building in buildings:
+            bpy.ops.object.mode_set(mode='OBJECT')
+            bpy.context.scene.objects.active = building
+            bpy.ops.object.origin_set(type='ORIGIN_GEOMETRY')
+            bpy.ops.object.mode_set(mode='EDIT')
+            bpy.ops.transform.resize(value=(0.75, 0.75, 1)) # shrinks on x and y axis by 0.75
+            bpy.ops.object.mode_set(mode='OBJECT')
     # then join, clip, and process them as one unit
-    joined_buildings = join_and_clip(buildings, min_co, max_co, 'Buildings')
-    print('META-START:{"building_count":%d}:META-END\n' % (len(buildings)))
+    if len(buildings) > 0:
+        joined_buildings = join_and_clip(buildings, min_co, max_co, 'Buildings')
+        print('META-START:{"building_count":%d}:META-END\n' % (len(buildings)))
     if joined_buildings:
         t = time.clock()
         do_building(joined_buildings, mm_to_units)
