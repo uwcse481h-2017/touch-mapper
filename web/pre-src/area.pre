@@ -211,10 +211,12 @@
     <hr>
   </div>
 
+  <!-- ###################### -->
+  <!-- # Clickable Map Area # -->
+  <!-- ###################### -->
   <div class="drag-map-with-mouse">
     <h3><b>{{ drag_map }}</b></h3>
   </div>
-
   <div id="map-area-preview-container" class="square-block-container" aria-label="{{ map_area_preview_label }}" style="display: none">
     <div class="dummy">
       <div id="map-area-preview" class="square-block" frameborder="0" scrolling="no"
@@ -222,13 +224,12 @@
     </div>
   </div>
 
-  <div class="row main-row">
-    <h3><b>{{ map_content_prelabel }}</b></h3>
-  </div>
-
   <!-- ################################## -->
   <!-- # Points of Interset Map Content # -->
   <!-- ################################## -->
+  <div class="row main-row">
+    <h3><b>{{ map_content_prelabel }}</b></h3>
+  </div>
   <div class="row"
        id="pointsOfInterestMapContent"
        style="padding:10px; background-color:white; border:1px solid black; border-radius: 8px; word-wrap: break-word; height: 300px; overflow: auto;">
