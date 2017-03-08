@@ -1,32 +1,41 @@
+<!DOCTYPE HTML>
 <div class="show-on-load" style="display: none">
   <script src="../scripts/three-20160121.min.js"></script>
   <script src="../scripts/three-STLLoader-20160122.js"></script>
   <script src="../scripts/aws-sdk-2.3.3.min.js"></script>
 
-  <h2>Map for <span class="map-address"></span></h2>
+  <h2>{{ created_map }}<span class="map-address"></span></h2>
 
   <div class="main-row">
-    <span class="printing-method-container">
-     <input type="radio" name="printing-method" id="printing-method-order" checked="checked">
-     <label for="printing-method-order">{{ map_printing__order }}</label>
-    </span>
+    <h3>
+      <span class="printing-method-container">
+        <input type="radio" name="printing-method" id="printing-method-self">
+        <label for="printing-method-self">{{ map_printing__self }}</label>
+      </span>
+    </h3>
     &nbsp;
-    <span class="printing-method-container">
-     <input type="radio" name="printing-method" id="printing-method-self">
-     <label for="printing-method-self">{{ map_printing__self }}</label>
-    </span>
+    <h3>
+      <span class="printing-method-container">
+        <input type="radio" name="printing-method" id="printing-method-order" checked="checked">
+        <label for="printing-method-order">{{ map_printing__order }}</label>
+      </span>
+    </h3>
   </div>
 
 
-  <a class="download-link main-row large-row green-button hidden-for-order" id="download-map" target="_blank">
-    <span>{{ download }}</span>
-  </a>
+  <h3>
+    <a class="download-link main-row large-row green-button hidden-for-order" id="download-map" target="_blank">
+      <span>{{ download }}</span>
+    </a>
+  </h3>
 
-  <a class="download-link main-row large-row green-button hidden-for-self-print" id="order-map">
-    <span class="order-download-link">
-      <%- @t('order_from', { linkTag: '<img class="order-pp-logo" src="/images/playful-pixels-logo.png" alt="Playful Pixels" />' }) %>
-    </span>
-  </a>
+  <h3>
+    <a class="download-link main-row large-row green-button hidden-for-self-print" id="order-map">
+      <span class="order-download-link">
+        <%- @t('order_from', { linkTag: '<img class="order-pp-logo" src="/images/playful-pixels-logo.png" alt="Playful Pixels" />' }) %>
+      </span>
+    </a>
+  </h3>
 
   <div class="email-sending-row main-row large-row green-button hidden-for-order">
     <span class="email-sending type-self">
@@ -70,5 +79,5 @@
     </div>
   </div>
 
-  <a class="back-to-previous-page" href="area">Back to map parameters</a>
+  <h3 style="text-align: center"><a href="area">Back to map parameters</a></h3>
 </div>
