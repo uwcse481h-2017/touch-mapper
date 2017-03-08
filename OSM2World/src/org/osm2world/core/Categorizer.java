@@ -18,12 +18,12 @@ public class Categorizer {
         // saying that, to be categorized as a hospital, this element needs to have the tag "amenity=hospital" 
 	private Map<String, Set<Rule>> categoryRules;
 
-	private Categorizer() throws FileNotFoundException {
+	private Categorizer() {
 		categoryRules = new HashMap<String, Set<Rule>>();
 		readInputFile();
 	}
 
-	public static Categorizer getInstance() throws FileNotFoundException {
+	public static Categorizer getInstance() {
 		if (instance == null)
 			instance = new Categorizer();
 
@@ -76,8 +76,15 @@ public class Categorizer {
 	// The above file means that any element that has a name tag and amenity tags bar/restaurant/etc... is
 	// categorized as FoodAndDrink, and any element that has either just a tourist tag (value does not matter)
 	// or a name tag and amenity tag with value tourist/travel will be categorized at Tourist.
-	private void readInputFile() throws FileNotFoundException { 
-		Scanner s = new Scanner(new File("categories.txt"));
+	private void readInputFile() { 
+		Scanner s; 
+		
+		try {
+			s = new Scanner(new File("categories.txt"));
+		} catch (FileNotFoundException e) {
+			System.err.println("categories.txt not found, using default of no categories");
+			s = new Scanner("");
+		}
 		
 		String currentCategory = "";        // These variables track current category/rule getting updated
 		Rule currentRule = new Rule();
