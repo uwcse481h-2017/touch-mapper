@@ -5,7 +5,6 @@
 
 <div class="steps">
   <h2>{{ it_is_simple }}</h2>
-
   <ul class="info-list">
     <li><span class="bullet">1</span>{{ simple__enter_address }}</li>
     <li><span class="bullet">2</span>{{ simple__click_create_tactile_map }}</li>
@@ -28,7 +27,9 @@
   <div class="col col2">
     <form id="address-search-form" action="#">
       <div class="address-input-container">
-        <input id="address-input" value="" />
+        <h3>
+          <input id="address-input" value="" />
+        </h3>
       </div>
       <div class="address-search-submit-container">
         <input id="address-search-submit" value="{{ search }}" type="submit" />
