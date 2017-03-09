@@ -17,6 +17,9 @@
       <span class="first-address"></span>
       <!--button class="show-all-addresses" style="display: none" aria-description="Show all found addresses">Show all</button-->
       <ul class="all-addresses" style="display: none"></ul>
+      <div>
+        <a href="."><u>Click Here to Go Back and Revise your Search</u></a>
+      </div>
     </div>
   </div>
 
@@ -244,7 +247,9 @@
     </div>
   </h3>
 
-  <h3 style="text-align: center"><a href=".">Back to address search</a></h3>
+  <h3 style="text-align: center">
+     <a href="."><u>Back to address search</u></a>
+  </h3>
 
   <div id="marker1-overlay" class="marker-container" title="{{ tooltip_selected_address }}">
     <div class="marker1-star part1"></div>

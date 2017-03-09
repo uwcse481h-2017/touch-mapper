@@ -79,6 +79,8 @@
         </div>
     </div>
   </div>
-
-  <h3 style="text-align: center"><a href="area">Back to map parameters</a></h3>
+  <br>
+  <h3 style="text-align: center">
+    <a href="area"><u>Back to map parameters</u></a>
+  </h3>
 </div>
