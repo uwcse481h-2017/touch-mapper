@@ -20,24 +20,33 @@
 </script>
 
 <!-- Don't show immediately because Google API loads asynchronously -->
-<div class="row main-row address-input-row show-on-load" style="display: none">
-  <div class="col col1">
-    <label for="address-input">{{ street_address }}:</label>
+<div class="address-input-row show-on-load" style="display: none">
+  <div class="row">
+    <label><b>Please enter an address to search for (including the city will give better results)</b></label>
   </div>
-  <div class="col col2">
-    <form id="address-search-form" action="#">
-      <div class="address-input-container">
-        <h3>
-          <input id="address-input" value="" />
-        </h3>
-      </div>
-      <div class="address-search-submit-container">
-        <input id="address-search-submit" value="{{ search }}" type="submit" />
-      </div>
-    </form>
+  <div class="row main-row">
+    <div class="col col1">
+      <label for="address-input">{{ street_address }}:</label>
+    </div>
+    <div class="col col2">
+      <form id="address-search-form" action="#" autocomplete='off' role="search">
+        <div class="address-input-container">
+          <h3>
+            <input id="address-input" value=""  
+                   aria-label="Please enter an address (including the city will give better results)"
+                   autocomplete="off" name="search" type="search"
+                   placeholder="Please enter an address to search for"/>
+          </h3>
+        </div>
+        <div class="address-search-submit-container">
+          <input id="address-search-submit" value="{{ search }}" 
+                 type="submit" aria-label="Click here to search"/>
+        </div>
+      </form>
 
-    <div id="searching" class="search-result-info" style="display: none">{{ searching }}</div>
-    <div id="no-search-results" class="search-result-info" role="alert" aria-live="assertive" tabindex="-1" style="display: none">Nothing found</div>
+      <div id="searching" class="search-result-info" style="display: none">{{ searching }}</div>
+      <div id="no-search-results" class="search-result-info" role="alert" aria-live="assertive" tabindex="-1" style="display: none">Nothing found</div>
+    </div>
   </div>
 </div>
 
