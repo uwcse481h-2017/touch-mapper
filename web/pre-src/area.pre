@@ -225,12 +225,12 @@
   </div>
 
   <!-- ################################## -->
-  <!-- # Points of Interset Map Content # -->
+  <!-- # Points of Interest Map Content # -->
   <!-- ################################## -->
   <div class="row main-row">
     <h3><b>{{ map_content_prelabel }}</b></h3>
   </div>
-  <div class="row"
+  <div aria-live="off" class="row" aria-label="Points of Interest Map Content"
        id="pointsOfInterestMapContent"
        style="padding:10px; background-color:white; border:1px solid black; border-radius: 8px; word-wrap: break-word; height: 300px; overflow: auto;">
     <!-- Contents (list) inserted by updatePointsOfInterestMapContent() JavaScript function in osm-preview.js -->

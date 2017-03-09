@@ -24,7 +24,8 @@
 
 
   <h3>
-    <a class="download-link main-row large-row green-button hidden-for-order" id="download-map" target="_blank">
+    <a class="download-link main-row large-row green-button hidden-for-order" 
+       id="download-map" target="_blank" aria-label="Click here to download the STL file for your tactile map.">
       <span>{{ download }}</span>
     </a>
   </h3>
