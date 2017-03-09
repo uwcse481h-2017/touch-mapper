@@ -77,7 +77,7 @@ public class PointOfInterestModule extends AbstractModule {
 			// VectorXYZ base, double height, double radiusBottom,
 			// double radiusTop, boolean drawBottom, boolean drawTop);
                         target.drawColumn(Materials.STEEL, null,
-				getBase(), 6, 2, 2, true, true);
+				getBase(), 9, 2, 2, true, true);
 		}
 
 		@Override
