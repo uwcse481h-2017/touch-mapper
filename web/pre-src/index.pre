@@ -6,9 +6,10 @@
 <div class="steps">
   <h2>{{ it_is_simple }}</h2>
   <ul class="info-list">
-    <li><span class="bullet">1</span>{{ simple__enter_address }}</li>
-    <li><span class="bullet">2</span>{{ simple__click_create_tactile_map }}</li>
-    <li><span class="bullet">3</span>{{ simple__intro_order_or_print }}</li>
+    <li><span class="bullet">1.</span>{{ simple__enter_address }}</li>
+    <li><span class="bullet">2.</span>{{ simple__customize_map }}</li>
+    <li><span class="bullet">3.</span>{{ simple__click_create_tactile_map }}</li>
+    <li><span class="bullet">4.</span>{{ simple__intro_order_or_print }}</li>
   </ul>
 </div>
 
