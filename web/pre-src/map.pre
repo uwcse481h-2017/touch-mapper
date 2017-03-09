@@ -24,7 +24,8 @@
 
 
   <h3>
-    <a class="download-link main-row large-row green-button hidden-for-order" id="download-map" target="_blank">
+    <a class="download-link main-row large-row green-button hidden-for-order" 
+       id="download-map" target="_blank" aria-label="Click here to download the STL file for your tactile map.">
       <span>{{ download }}</span>
     </a>
   </h3>
@@ -32,7 +33,7 @@
   <h3>
     <a class="download-link main-row large-row green-button hidden-for-self-print" id="order-map">
       <span class="order-download-link">
-        <%- @t('order_from', { linkTag: '<img class="order-pp-logo" src="/images/playful-pixels-logo.png" alt="Playful Pixels" />' }) %>
+        <%- @t('order_from', { linkTag: '<img class="order-pp-logo" src="/images/playful-pixels-logo-blackgreen.png" alt="Playful Pixels" />' }) %>
       </span>
     </a>
   </h3>
@@ -78,6 +79,8 @@
         </div>
     </div>
   </div>
-
-  <h3 style="text-align: center"><a href="area">Back to map parameters</a></h3>
+  <br>
+  <h3 style="text-align: center">
+    <a href="area"><u>Back to map parameters</u></a>
+  </h3>
 </div>

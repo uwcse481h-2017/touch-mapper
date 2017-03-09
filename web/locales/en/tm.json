@@ -9,6 +9,7 @@
     "intro": "Tactile maps are a great aid for people who are blind or partially sighted, helping them to orient themselves and to plan routes. Using Tactile MapTile, you can easily create custom outdoor maps for any address of your choice. You can either 3D-print the map yourself or order an affordable 3D print.",
     "it_is_simple": "Directions to create your tactile map:",
     "simple__enter_address": "Enter an address and click \"Search\"",
+    "simple__customize_map": "Customize your map with map styles and features",
     "simple__click_create_tactile_map": "Click \"Create tactile map\"",
     "simple__intro_order_or_print": "Order the map or print it yourself",
     "address": "Address",
