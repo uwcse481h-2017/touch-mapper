@@ -29,25 +29,6 @@ window.initOsmPreview = function(outputs) {
   });
 
   var previewMapShown = false;
-  function updatePreview() {
-    var view = previewMap.getView();
-    var newCenter = ol.proj.fromLonLat(computeLonLat(data));
-    var diameter = mapDiameter();
-    var metersPerPixel = mapDiameter() / outputs.map.width();
-    var metersPerPixel = mapDiameter() / outputs.map.width();
-    var resolutionAtCoords = metersPerPixel / view.getProjection().getPointResolution(1, newCenter);
-    view.setResolution(resolutionAtCoords);
-    view.setCenter(newCenter);
-    previewMapMarker1.setPosition(ol.proj.fromLonLat([ data.get("lon"), data.get("lat") ]));
-    
-    outputs.currentDiameterMeters.text(diameter.toFixed(0));
-    outputs.currentDiameterYards.text((diameter * 1.0936133).toFixed(0));
-
-    if (! previewMapShown) {
-      previewMapShown = true;
-      previewMap.updateSize();
-    }
-  }
 
   // removes duplicate entries from an array
   function removeDuplicates(a) {
@@ -73,21 +54,42 @@ window.initOsmPreview = function(outputs) {
     // which category each feature belongs to
     var currentCategory;
 
+    // A map from feature name to its address (no entry if the feature does not have an addr tag) 
+    var addresses = {};
+
     // Loop through each element (some are blank, others are categories, and the rest are features)
     for (var i = 0; i < elements.length; i++) {
       var element = elements[i];
 
       if (element.nodeType === 1) { // Otherwise, this element is blank
         if (element.tagName === "H2") { // This element is a category  
-          categories[element.innerHTML] = [];
-          currentCategory = element.innerHTML;
+          categories[element.textContent] = [];
+          currentCategory = element.textContent;
         } else if (element.tagName === "P") { // This element is a feature
           if (currentCategory === undefined) {
             console.log("ERROR: The format of the provided html is unexpected. " + 
                         "Expected a category name to come before any feature name.");
             break;
           } else if (element.hasChildNodes()) {
-            categories[currentCategory].push(element.firstChild.innerHTML); 
+            categories[currentCategory].push(element.firstChild.textContent); 
+            
+            // Get the address of this feature if it has one
+            var address = "";
+            var childNodes = element.childNodes;
+
+            for (var j = 1; j < childNodes.length; j++) { // Start at 1 since first element is the feature name^
+              var text = childNodes[j].textContent;
+
+              if (text.startsWith("\naddr:housenumber:")) { // I rely on the fact that these tags are in alpha order,
+                address += text.slice(19, text.length);   // so housenumber will always come before street
+              } else if (text.startsWith("\naddr:street:")) {
+                address += " " + text.slice(14, text.length);
+              }
+            }
+
+            if (address) {
+              addresses[element.firstChild.textContent] = address;
+            } // Otherwise, this feature doesn't have an address so do nothing
           }
         }
       }
@@ -103,7 +105,13 @@ window.initOsmPreview = function(outputs) {
       
       var features = removeDuplicates(categories[category]);
       for (var i = 0; i < features.length; i++) {
-        contentHTMLString += '<li><b>' + features[i] + '</b></li>';
+        var feature = features[i];
+
+        if (feature in addresses) {
+          feature += " (" + addresses[feature] + ")";
+        }
+
+        contentHTMLString += '<li><b>' + feature + '</b></li>';
       }
 
       contentHTMLString += '</ul><p><br>';
@@ -230,6 +238,28 @@ window.initOsmPreview = function(outputs) {
      });
   }
 
+  function updatePreview() {
+    var view = previewMap.getView();
+    var newCenter = ol.proj.fromLonLat(computeLonLat(data));
+    var diameter = mapDiameter();
+    var metersPerPixel = mapDiameter() / outputs.map.width();
+    var metersPerPixel = mapDiameter() / outputs.map.width();
+    var resolutionAtCoords = metersPerPixel / view.getProjection().getPointResolution(1, newCenter);
+    view.setResolution(resolutionAtCoords);
+    view.setCenter(newCenter);
+    previewMapMarker1.setPosition(ol.proj.fromLonLat([ data.get("lon"), data.get("lat") ]));
+    
+    outputs.currentDiameterMeters.text(diameter.toFixed(0));
+    outputs.currentDiameterYards.text((diameter * 1.0936133).toFixed(0));
+
+    if (! previewMapShown) {
+      previewMapShown = true;
+      previewMap.updateSize();
+    }
+
+    getUpdatedOSMData();
+  }
+
   // Printings informaton about the bounding box of the currently
   // displayed map (used mostly for debugging purposes)
   function printMapRegionDimensions() {
@@ -258,7 +288,7 @@ window.initOsmPreview = function(outputs) {
     
     // Grab osm data for this map region centered at computeLonLat() with
     // offset X & Y from the latitude (lat) & longitude (lon) of the point of interest
-    getUpdatedOSMData();
+
     console.log("### Updated OSM Data due to Visual Map Region Change ###\n");
   }); // end of data.on
 
