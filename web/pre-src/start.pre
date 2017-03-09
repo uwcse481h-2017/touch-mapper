@@ -51,12 +51,12 @@
         <div class="banner-texts">
           <h1>
             <a href="." style="display: table;margin: auto;">
-              <img class="logo" alt="Touch Mapper" aria-labelledby="h1-title" type="image/png" src="/images/tactilemaptile-white.png">
+              <img class="logo" alt="Tactile MapTile" aria-labelledby="h1-title" 
+                   type="image/png" src="/images/tactilemaptile-white.png">
                 <title id="h1-title">Tactile Map Tile</title>
               </img>
             </a>
           </h1>
-          <h3><p>{{ blurb }}</p></h3>
           <div class="top-corner">
             <!--label for="language-selector" class="visuallyhidden">{{ language }}</label>
             <select class="language-selector" id="language-selector">

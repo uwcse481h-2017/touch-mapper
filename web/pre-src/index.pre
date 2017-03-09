@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <div class="intro">
+  <h2><p>{{ blurb }}</p></h2>
   <p>{{ intro }}</p>
 </div>
 
