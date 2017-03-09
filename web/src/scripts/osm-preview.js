@@ -71,7 +71,7 @@ window.initOsmPreview = function(outputs) {
                         "Expected a category name to come before any feature name.");
             break;
           } else if (element.hasChildNodes()) {
-            categories[currentCategory].push(element.firstChild.textContent); 
+            categories[currentCategory].push(element.firstChild.outerHTML); 
             
             // Get the address of this feature if it has one
             var address = "";
@@ -88,7 +88,7 @@ window.initOsmPreview = function(outputs) {
             }
 
             if (address) {
-              addresses[element.firstChild.textContent] = address;
+              addresses[element.firstChild.outerHTML] = address;
             } // Otherwise, this feature doesn't have an address so do nothing
           }
         }
@@ -111,7 +111,7 @@ window.initOsmPreview = function(outputs) {
           feature += " (" + addresses[feature] + ")";
         }
 
-        contentHTMLString += '<li><b>' + feature + '</b></li>';
+        contentHTMLString += '<li>' + feature + '</li>';
       }
 
       contentHTMLString += '</ul><p><br>';
