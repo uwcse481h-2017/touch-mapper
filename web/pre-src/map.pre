@@ -33,7 +33,7 @@
   <h3>
     <a class="download-link main-row large-row green-button hidden-for-self-print" id="order-map">
       <span class="order-download-link">
-        <%- @t('order_from', { linkTag: '<img class="order-pp-logo" src="/images/playful-pixels-logo.png" alt="Playful Pixels" />' }) %>
+        <%- @t('order_from', { linkTag: '<img class="order-pp-logo" src="/images/playful-pixels-logo-blackgreen.png" alt="Playful Pixels" />' }) %>
       </span>
     </a>
   </h3>
