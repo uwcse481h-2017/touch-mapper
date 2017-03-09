@@ -131,11 +131,21 @@ window.initOsmPreview = function(outputs) {
     var latMin = posLonLat[1] - degreesLat;
     var latMax = posLonLat[1] + degreesLat;
 
+    // Verify that we have valid bbox parameters
+    if (isNaN(lonMin) || isNaN(lonMax) || isNaN(latMin) || isNaN(latMax)) {
+       return; // Don't run query with invalid bbox
+    }
+
     // Calling Overpass API Popup Query
     var bbox = "" + latMin + "," + lonMin + "," + latMax + "," + lonMax;
 
     // Building up the url for querying overpass popup api
-    var urlPrefix = "https://overpass-api.de/api/interpreter?data=[out:popup";
+    // Originally used Overpass API Germany (de) but came across errors in format of the output
+    // French & Rambler/Russia (with http instead of https, may be issue for CloudFront) versions also seem to be working as of now 
+    //   var urlPrefix = "https://overpass-api.de/api"; // Overpass API Germany (de) (10,000 queries per day)
+    //   var urlPrefix = "http://overpass.osm.rambler.ru/cgi"; // Overpass API Rambler/Russia (ru) (10,000 queries per day
+    var urlPrefix = "https://api.openstreetmap.fr/oapi"; // Overpass API France (fr) (1,000 queries per day)
+    urlPrefix += "/interpreter?data=[out:popup";
     var urlPostfix = "];(node(" + bbox + ");<;);out;";
 
     // The following string variables are all different queries to include in the url
@@ -193,37 +203,20 @@ window.initOsmPreview = function(outputs) {
     // This variable will hold all of the queries concatenated together
     var options = "";
 
-    // Determining which preset is selected by examining the HTML document
-    var mapStylesPreset = document.getElementById('map-styles-preset');
-    var presetSelection = mapStylesPreset.options[mapStylesPreset.selectedIndex].value;
+    // Add all options specific to map styles
+    options += transitOptions;    // public transportation information
+    options += pedestrianOptions; // pedestrian information
 
-    if (presetSelection === "public-transportation") {
-      options += transitOptions;
-    } else if (presetSelection === "pedestrian") {
-      options += pedestrianOptions;
-    } else if (presetSelection === "default") {
-      // Do nothing, only want to use feature categories & other points of interest
-      options += pedestrianOptions;
-    } else { // (presetSelection === "select")
-      // Case of nothing selected
-      osmPOIhtml = "";
-      updatePointsOfInterestMapContent("");
-      return;
-    }
-
-    // Determining which checkboxes are checked by examining the HTML document
+    // Add all feature category options
     var optionCategories = [foodDrinkOptions, schoolsOptions, moneyOptions, entertainmentOptions, medicalOptions, 
                             publicOptions, tourismOptions, shoppingOptions, leisureOptions];
     var featureCategories = ["food-drink", "schools", "money", "entertainment", "medical", 
                              "public", "tourism", "shopping", "leisure"];
-
     for (var i = featureCategories.length - 1; i >= 0; i--) {
-      if (document.getElementById('feature-category-' + featureCategories[i]).checked) {
         options = optionCategories[i] + options;
-      }
     }
     
-    var url = urlPrefix + options + urlPostfix;      
+    var url = urlPrefix + options + urlPostfix;
 
     // JQuery GET request to grab OSM data from the url
     $.get(url, function( osmDataHTML ) {
@@ -236,21 +229,6 @@ window.initOsmPreview = function(outputs) {
        updatePointsOfInterestMapContent(url);        
      });
   }
-
-  // Monitors whether the feature-category textboxes in the UI change their value
-  // (in which case, this calls the getUpdatedOSMData to update the data on the map
-  // given the check box feature categories selected)
-  // categories: "food-drink", "schools", "money", "entertainment", "medical", "public", "tourism", "shopping", "leisure"
-  data.on("change:feature-category-food-drink change:feature-category-schools change:feature-category-money change:feature-category-entertainment change:feature-category-medical change:feature-category-public change:feature-category-tourism change:feature-category-shopping change:feature-category-leisure", function() {
-    getUpdatedOSMData();
-    console.log("### Updated OSM Data due to Check Box Selection ###\n");
-  });
-
-  // Whenever the dropdown selection is changed, call getUpdatedOSMData to send a new query
-  document.getElementById("map-styles-preset").onchange = function() {
-    getUpdatedOSMData();
-    console.log("### Updated OSM Data due to Dropdown Selection ###\n");
-  };
 
   // Printings informaton about the bounding box of the currently
   // displayed map (used mostly for debugging purposes)

@@ -4,8 +4,10 @@ import static org.osm2world.core.target.common.material.Materials.*;
 import static org.osm2world.core.target.common.material.NamedTexCoordFunction.GLOBAL_X_Z;
 import static org.osm2world.core.target.common.material.TexCoordUtil.triangleTexCoordLists;
 
+import java.io.*;
 import java.util.*;
 
+import org.osm2world.core.Categorizer;
 import org.osm2world.core.map_data.data.MapArea;
 import org.osm2world.core.map_data.data.MapNode;
 import org.osm2world.core.map_data.data.MapWaySegment;
@@ -26,20 +28,13 @@ import org.osm2world.core.world.modules.common.AbstractModule;
  * Adds a single Point of Interet (Feature Category) to the World
  */
 public class PointOfInterestModule extends AbstractModule {
-	
-        private static final List<String> tagKeys = new ArrayList<String>() {{
-		add("amenity"); add("tourism"); add("shop"); add("leisure");
-	}};
 
-	private boolean applyToFilterCondition(MapElement element) {
-		return element.getTags().containsKey("name") && 
-		    element.getTags().containsAnyKey(tagKeys);
-	}
+	Categorizer c = Categorizer.getInstance();
 
 	@Override
         protected void applyToNode(MapNode node) {
 
-        	if (applyToFilterCondition(node)) {
+        	if (c.isPointOfInterest(node)) {
         	        node.addRepresentation(new PointOfInterestNode(node));
         	}
 
@@ -48,7 +43,7 @@ public class PointOfInterestModule extends AbstractModule {
        	@Override
         protected void applyToWaySegment(MapWaySegment segment) {
 
-                if (applyToFilterCondition(segment)) {
+                if (c.isPointOfInterest(segment)) {
         	        segment.addRepresentation(new PointOfInterestWay(segment));
         	}
 
@@ -57,20 +52,19 @@ public class PointOfInterestModule extends AbstractModule {
         @Override
         protected void applyToArea(MapArea area) {
 
-                if (applyToFilterCondition(area)) {
+                if (c.isPointOfInterest(area)) {
         	        area.addRepresentation(new PointOfInterestArea(area));
         	}
 
         }
 
+
         private static class PointOfInterestNode extends NoOutlineNodeWorldObject
 						 implements RenderableToAllTargets {
 
-		private MapNode node;
-
 		public PointOfInterestNode(MapNode node) {
-			super(node);	
-		}		
+			super(node);
+		}
 
 		@Override
 		public void renderTo(Target<?> target) {
@@ -96,11 +90,9 @@ public class PointOfInterestModule extends AbstractModule {
 	private static class PointOfInterestWay extends NoOutlineWaySegmentWorldObject
 						implements RenderableToAllTargets {
 	
-		private MapWaySegment segment;
-
 		public PointOfInterestWay(MapWaySegment segment) {
-			super(segment);	
-		}		
+			super(segment);
+		}
 
 		@Override
 		public void renderTo(Target<?> target) {
@@ -114,17 +106,13 @@ public class PointOfInterestModule extends AbstractModule {
 
 	}
 	
-	
-
 	private static class PointOfInterestArea extends AbstractAreaWorldObject
 						 implements RenderableToAllTargets {
 	
-		private MapArea area;
-	
 		public PointOfInterestArea(MapArea area) {
-			super(area);	
-		}		
-	
+			super(area);
+		}
+
 		@Override
 		public void renderTo(Target<?> target) {
 	
@@ -136,5 +124,4 @@ public class PointOfInterestModule extends AbstractModule {
 		}
 
 	}
-	
 }

@@ -16,6 +16,7 @@
       <li>{{ what_is_the_map_like__water }}</li>
       <li>{{ what_is_the_map_like__selected_addr }}</li>
       <li>{{ what_is_the_map_like__north }}</li>
+      <li>{{ what_is_the_map_like__features }}</li>
     </ul>
   </p>
 
@@ -56,7 +57,9 @@
     <%- @t('about_touch_mapper_answer', { startTag: '<a href="https://www.playfulpixels.com/">', endTag: '</a>' }) %>
   </p>
   <p>
-    <%- @t('news_from', { linkFB: '<a href="https://www.facebook.com/touchmapper/">Facebook</a>', linkTwitter: '<a href="https://twitter.com/touchmapper">Twitter</a>' }) %>
+    <!--
+       <%- @t('news_from', { linkFB: '<a href="https://www.facebook.com/touchmapper/">Facebook</a>', linkTwitter: '<a href="https://twitter.com/touchmapper">Twitter</a>' }) %>
+    -->
   </p>
   <p>{{ want_to_improve_please }}</p>
 
