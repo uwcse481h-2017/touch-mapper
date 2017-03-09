@@ -12,7 +12,7 @@ import random
 import time
 
 ROAD_HEIGHT_CAR_MM = 0.82 # 3 x 0.25-0.3mm layers
-ROAD_HEIGHT_PEDESTRIAN_MM = 1.5
+ROAD_HEIGHT_PEDESTRIAN_MM = 2.2 #1.5
 BUILDING_HEIGHT_MM = 0.75 # 2.9
 BASE_HEIGHT_MM = 1.75 # 0.6 Jess's--1.75?
 BASE_OVERLAP_MM = 0.01
@@ -126,7 +126,7 @@ def add_marker1(args, scale):
         
     mm_to_units = scale / 1000
     radius = MARKER_RADIUS_MM * mm_to_units
-    height = MARKER_HEIGHT_MM * mm_to_units
+    height = (MARKER_HEIGHT_MM * mm_to_units) + 1.5
     # If the cone has sharp top, three.js won't render it remotely properly, and it'll 3D print poorly too
     bpy.ops.mesh.primitive_cone_add(vertices = 16, radius1 = radius, radius2 = radius / 8, depth = height, \
         location = [ min_x + (max_x - min_x) * marker_x, min_y + (max_y - min_y) * marker_y, height / 2 ])
