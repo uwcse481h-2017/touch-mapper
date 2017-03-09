@@ -3,7 +3,7 @@
   <script src="../scripts/aws-sdk-2.3.3.min.js"></script>
   <script src="../scripts/ol-3.15.1-custom.min.js"></script>
 
-  <h2>Map parameters</h2>
+  <h2>Customize your Tactile Map</h2>
 
   <h3>
      Please select a size, scale, style, and optional feature categories for your map. Once you've customized your map, you'll find a text description of what's included in the map at the bottom of the page.
