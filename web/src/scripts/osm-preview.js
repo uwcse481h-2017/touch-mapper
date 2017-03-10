@@ -54,6 +54,9 @@ window.initOsmPreview = function(outputs) {
     // which category each feature belongs to
     var currentCategory;
 
+    // A map from street name to list of features that are located on that street
+    var streets = {};
+
     // A map from feature name to its address (no entry if the feature does not have an addr tag) 
     var addresses = {};
 
@@ -71,25 +74,37 @@ window.initOsmPreview = function(outputs) {
                         "Expected a category name to come before any feature name.");
             break;
           } else if (element.hasChildNodes()) {
-            categories[currentCategory].push(element.firstChild.outerHTML); 
-            
             // Get the address of this feature if it has one
-            var address = "";
+            // Also, check if this feature has a name tag (we filter out features without names)
+            var hasName = false;
+            var housenumber = "";
+            var street = "";
             var childNodes = element.childNodes;
 
             for (var j = 1; j < childNodes.length; j++) { // Start at 1 since first element is the feature name^
               var text = childNodes[j].textContent;
 
-              if (text.startsWith("\naddr:housenumber:")) { // I rely on the fact that these tags are in alpha order,
-                address += text.slice(19, text.length);   // so housenumber will always come before street
+              if (text.startsWith("\nname:")) {
+                hasName = true;
+              } else if (text.startsWith("\naddr:housenumber:")) { // I rely on the fact that these tags are in alpha order,
+                housenumber += text.slice(19, text.length);        // so housenumber will always come before street
               } else if (text.startsWith("\naddr:street:")) {
-                address += " " + text.slice(14, text.length);
+                street = text.slice(14, text.length);
               }
             }
 
-            if (address) {
-              addresses[element.firstChild.outerHTML] = address;
-            } // Otherwise, this feature doesn't have an address so do nothing
+            if (hasName) {
+              categories[currentCategory].push(element.firstChild.outerHTML); 
+
+              if (housenumber) { // This feature has an address
+                addresses[element.firstChild.outerHTML] = housenumber + " " + street;
+
+                if (!(street in streets)) {
+                  streets[street] = [];
+                }
+                streets[street].push(element.firstChild.outerHTML); 
+              } // Otherwise, this feature doesn't have an address so do nothing
+            }
           }
         }
       }
@@ -103,21 +118,32 @@ window.initOsmPreview = function(outputs) {
       contentHTMLString += '<h3><u>' + category + '</u></h3>';
       contentHTMLString += '<p><ul style="padding-left: 20px;">';
       
-      var features = removeDuplicates(categories[category]);
-      for (var i = 0; i < features.length; i++) {
-        var feature = features[i];
+      for (var streetTag in streets) { // Because we want to group together features by which street they are on
+        var features = removeDuplicates(categories[category]);
 
-        if (feature in addresses) {
-          feature += " (" + addresses[feature] + ")";
+        for (var i = 0; i < features.length; i++) {
+          var feature = features[i];
+
+          if (streets[streetTag].includes(feature)) {
+            if (feature in addresses) {
+              feature += " (" + addresses[feature] + ")";
+            }
+
+            contentHTMLString += '<li>' + feature + '</li>';
+          }
         }
-
-        contentHTMLString += '<li>' + feature + '</li>';
       }
+
+      for (var i = 0; i < features.length; i++) {
+        if (!(features[i] in addresses)) {
+          contentHTMLString += '<li>' + features[i] + '</li>';
+        }
+      } 
 
       contentHTMLString += '</ul><p><br>';
     }
  
-    // Update Points of Interes from Map Content as a list of Map Elements
+    // Update Points of Interest from Map Content as a list of Map Elements
     var elm = getElementInsideContainer('mainArea', 'pointsOfInterestMapContent');
     elm.innerHTML = contentHTMLString;
   }                                                              
