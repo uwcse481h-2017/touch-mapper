@@ -118,14 +118,14 @@ window.initOsmPreview = function(outputs) {
       contentHTMLString += '<h3><u>' + category + '</u></h3>';
       contentHTMLString += '<p><ul style="padding-left: 20px;">';
       
-      for (var streetTag in streets) { // Because we want to group together features by which street they are on
-        var features = removeDuplicates(categories[category]);
+      var features = removeDuplicates(categories[category]);
 
+      for (var streetTag in streets) { // Because we want to group together features by which street they are on
         for (var i = 0; i < features.length; i++) {
           var feature = features[i];
 
-          if (streets[streetTag].includes(feature)) {
-            if (feature in addresses) {
+          if (streets[streetTag].includes(feature)) { // This feature is located on the current street
+            if (feature in addresses) { 
               feature += " (" + addresses[feature] + ")";
             }
 
@@ -134,6 +134,7 @@ window.initOsmPreview = function(outputs) {
         }
       }
 
+      // Now add all the features that do not have an address since they were skipped earlier
       for (var i = 0; i < features.length; i++) {
         if (!(features[i] in addresses)) {
           contentHTMLString += '<li>' + features[i] + '</li>';
